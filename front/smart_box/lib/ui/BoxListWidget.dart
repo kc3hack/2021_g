@@ -49,7 +49,6 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   /// アイテム一覧で戻るボタンが押された時の処理
   ///
   Future<bool> _onWillPopHandler() async {
-    print("aaaaa");
     setState(() {
       this._isBoxSelected = false;
     });
