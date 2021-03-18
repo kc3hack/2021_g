@@ -8,19 +8,118 @@ servers:
   - url: http://localhost:8080
     description: ローカル環境
 tags:
-  - name: hoge
+  - name: box
+  - name: item
+  - name: qr
 
 paths:
-  /hoge:
+  /boxes:
     get:
       tags:
-        - hoge
-      summary: ''
-      # security:
-      #   - Admin: []
+        - box
+      summary: 'box一覧取得'
+      security:
+        - Authorization: []
       responses:
         200:
           $ref: '#/components/responses/200'
+
+    post:
+      tags:
+        - box
+      summary: 'box作成'
+      security:
+        - Authorization: []
+      responses:
+        201:
+          $ref: '#/components/responses/201'
+
+  /boxes/{box_id}:
+    delete:
+      tags:
+        - box
+      summary: '特定のbox削除'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        204:
+          $ref: '#/components/responses/204'
+
+  /boxes/{box_id}/qr:
+    get:
+      tags:
+        - box
+        - qr
+      summary: '特定のboxのQR取得'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+
+  /boxes/{box_id}/items:
+    get:
+      tags:
+        - box
+        - item
+      summary: '特定のboxのitem一覧取得'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+
+    post:
+      tags:
+        - box
+        - item
+      summary: '特定のboxにitem追加'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        201:
+          $ref: '#/components/responses/201'
+
+  /items:
+    delete:
+      tags:
+        - item
+      summary: '特定のitem削除'
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        204:
+          $ref: '#/components/responses/204'
 
 components:
   schemas:
@@ -59,27 +158,21 @@ components:
       description: ForbIdden
     404:
       description: Not Found
-    cors:
-      description: Default response for CORS method
-      headers:
-        Access-Control-Allow-Headers:
-          schema:
-            type: 'string'
-        Access-Control-Allow-Methods:
-          schema:
-            type: 'string'
-        Access-Control-Allow-Origin:
-          schema:
-            type: 'string'
+    # cors:
+    #   description: Default response for CORS method
+    #   headers:
+    #     Access-Control-Allow-Headers:
+    #       schema:
+    #         type: 'string'
+    #     Access-Control-Allow-Methods:
+    #       schema:
+    #         type: 'string'
+    #     Access-Control-Allow-Origin:
+    #       schema:
+    #         type: 'string'
 
   securitySchemes:
-    Admin:
-      type: apiKey
-      name: Authorization
-      in: header
-      description: IDトークンを付与
-
-    Firebase:
+    Authorization:
       type: apiKey
       name: Authorization
       in: header
