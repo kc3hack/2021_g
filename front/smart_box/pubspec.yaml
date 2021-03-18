@@ -25,6 +25,9 @@ dependencies:
     sdk: flutter
 
   flutter_barcode_scanner: ^1.0.2
+  image_picker: ^0.6.7+22
+  amazon_cognito_identity_dart_2: ^0.1.25+3
+
 
 
   # The following adds the Cupertino Icons font to your application.
