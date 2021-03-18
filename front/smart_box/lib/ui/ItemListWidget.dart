@@ -70,10 +70,10 @@ class _ItemListWidgetState extends State<ItemListWidget> {
                         style: TextStyle(fontSize: 16),
                       )),
                   Flexible(
-                      child: GridView.count(
+                      child: GridView.extent(
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    crossAxisCount: 2,
+                    maxCrossAxisExtent: 200,
                     children: itemWidgetList,
                   ))
                 ])));
