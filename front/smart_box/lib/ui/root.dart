@@ -72,7 +72,7 @@ class _RootWidgetState extends State<RootWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:_routes.elementAt(_selectedIndex),
+      body: _routes.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavigationBarItems,
         currentIndex: _selectedIndex,

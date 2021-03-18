@@ -14,7 +14,8 @@ class BoxListWidget extends StatefulWidget {
 
 class _BoxListWidgetState extends State<BoxListWidget> {
   List<Box> boxList = [];
-  GlobalKey<NavigatorState> _navigatorKey = new GlobalKey<NavigatorState>();
+  bool _isBoxSelected = false;
+  Box _selectedBox;
 
   ///
   /// 表示するボックスを更新する
@@ -38,11 +39,53 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   /// リストのボックスをタップした時の処理
   ///
   void _boxTapHandler(Box box) {
-    this._navigatorKey.currentState.push(MaterialPageRoute(
-      builder: (context) {
-        return ItemListWidget(box);
-      },
-    ));
+    setState(() {
+      this._isBoxSelected = true;
+      this._selectedBox = box;
+    });
+  }
+
+  ///
+  /// アイテム一覧で戻るボタンが押された時の処理
+  ///
+  Future<bool> _onWillPopHandler() async {
+    print("aaaaa");
+    setState(() {
+      this._isBoxSelected = false;
+    });
+    return false;
+  }
+
+  ///
+  /// アイテム一覧を表示するためのWidgetを作成する
+  ///
+  WillPopScope _makeItemList() {
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("アイテム一覧"),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: _onWillPopHandler,
+            ),
+            actions: [
+              Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      size: 40,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    onPressed: () {
+                      print("search button pushed");
+                    },
+                  ))
+            ],
+          ),
+          body: ItemListWidget(this._selectedBox),
+        ),
+        onWillPop: this._onWillPopHandler);
   }
 
   ///
@@ -61,9 +104,67 @@ class _BoxListWidgetState extends State<BoxListWidget> {
           ),
           leading: Icon(Icons.check_box_outline_blank),
           onTap: () {
-            _boxTapHandler(box);
+            this._boxTapHandler(box);
           },
         ));
+  }
+
+  ///
+  /// ボックスのリストを表示するWidget
+  ///
+  Scaffold _makeBoxList() {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("ホーム"),
+          actions: [
+            Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    size: 40,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () {
+                    print("search button pushed");
+                  },
+                ))
+          ],
+        ),
+        floatingActionButton: Container(
+          width: 70,
+          height: 70,
+          child: FloatingActionButton(
+            child: Icon(
+              Icons.add,
+              size: 35,
+              color: Colors.white,
+            ),
+            onPressed: () => print("pushed"),
+            backgroundColor: Color.fromARGB(255, 238, 152, 157),
+          ),
+        ),
+        body: FutureBuilder(
+            future: _updateBoxList(),
+            builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+              List<Widget> aList =
+                  this.boxList.map((box) => _makeBoxTile(box)).toList();
+              return Container(
+                  child: Column(children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
+                  child: Text(
+                    "すべてのボックス",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  alignment: Alignment.topLeft,
+                ),
+                Flexible(
+                    child: ListView(
+                  children: aList,
+                ))
+              ]));
+            }));
   }
 
   @override
@@ -73,63 +174,6 @@ class _BoxListWidgetState extends State<BoxListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: this._navigatorKey,
-      onGenerateRoute: (route) => MaterialPageRoute(
-        settings: route,
-        builder: (context) => Scaffold(
-            appBar: AppBar(
-              title: Text("ホーム"),
-              actions: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.search,
-                        size: 40,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      onPressed: () {
-                        print("search button pushed");
-                      },
-                    ))
-              ],
-            ),
-            floatingActionButton: Container(
-              width: 70,
-              height: 70,
-              child: FloatingActionButton(
-                child: Icon(
-                  Icons.add,
-                  size: 35,
-                  color: Colors.white,
-                ),
-                onPressed: () => print("pushed"),
-                backgroundColor: Color.fromARGB(255, 238, 152, 157),
-              ),
-            ),
-            body: FutureBuilder(
-                future: _updateBoxList(),
-                builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-                  List<Widget> aList =
-                      this.boxList.map((box) => _makeBoxTile(box)).toList();
-                  return Container(
-                      child: Column(children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
-                      child: Text(
-                        "すべてのボックス",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      alignment: Alignment.topLeft,
-                    ),
-                    Flexible(
-                        child: ListView(
-                      children: aList,
-                    ))
-                  ]));
-                })),
-      ),
-    );
+    return (this._isBoxSelected) ? this._makeItemList() : this._makeBoxList();
   }
 }
