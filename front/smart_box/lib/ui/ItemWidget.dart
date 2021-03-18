@@ -22,7 +22,11 @@ class ItemWidget extends StatelessWidget {
     if (image == null) image = Container();
 
     return Container(
-        color: Colors.white,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(color: Colors.black12, width: 2),
+            )),
         padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: GestureDetector(
             onTap: touchEvent,
