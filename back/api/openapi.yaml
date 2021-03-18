@@ -22,7 +22,13 @@ paths:
         - Authorization: []
       responses:
         200:
-          $ref: '#/components/responses/200'
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Box'
 
     post:
       tags:
@@ -30,9 +36,22 @@ paths:
       summary: 'box作成'
       security:
         - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/BoxName'
       responses:
         201:
-          $ref: '#/components/responses/201'
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Box'
 
   /boxes/{box_id}:
     delete:
@@ -67,7 +86,13 @@ paths:
         - Authorization: []
       responses:
         200:
-          $ref: '#/components/responses/200'
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Base64'
 
   /boxes/{box_id}/items:
     get:
@@ -85,7 +110,13 @@ paths:
         - Authorization: []
       responses:
         200:
-          $ref: '#/components/responses/200'
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
 
     post:
       tags:
@@ -100,9 +131,24 @@ paths:
             $ref: '#/components/schemas/Id'
       security:
         - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/ItemName'
+                image:
+                  $ref: '#/components/schemas/Base64'
       responses:
         201:
-          $ref: '#/components/responses/201'
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
 
   /items:
     delete:
@@ -142,6 +188,56 @@ components:
       type: string
       format: url
       example: 'https://example.com'
+
+    Count:
+      type: integer
+      example: 10
+
+    Base64:
+      type: string
+      format: byte
+      description: base64 encoded characters
+      example: base64 encoded characters
+
+    BoxName:
+      type: string
+      minLength: 1
+      maxLength: 255
+      example: TestBOX
+
+    ItemName:
+      type: string
+      minLength: 1
+      maxLength: 255
+      example: TestItem
+
+    Box:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/Datetime'
+        updated_at:
+          $ref: '#/components/schemas/Datetime'
+        name:
+          $ref: '#/components/schemas/BoxName'
+        item_count:
+          $ref: '#/components/schemas/Count'
+
+    Item:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/Datetime'
+        updated_at:
+          $ref: '#/components/schemas/Datetime'
+        name:
+          $ref: '#/components/schemas/ItemName'
+        image:
+          $ref: '#/components/schemas/Base64'
 
   responses:
     200:
