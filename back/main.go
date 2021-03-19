@@ -16,57 +16,57 @@ type handler struct {
 }
 
 // box一覧取得
-// (GET /boxes
+// (GET /boxes)
 func (h handler) GetBoxes(ctx echo.Context) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // box作成
 // (POST /boxes)
 func (h handler) PostBoxes(ctx echo.Context) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のbox削除
 // (DELETE /boxes/{box_id})
 func (h handler) DeleteBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のbox編集
 // (PUT /boxes/{box_id})
 func (h handler) PutBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のboxのitem一覧取得
 // (GET /boxes/{box_id}/items)
 func (h handler) GetBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のboxにitem追加
 // (POST /boxes/{box_id}/items)
 func (h handler) PostBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のboxのQR取得
 // (GET /boxes/{box_id}/qr)
 func (h handler) GetBoxesBoxIdQr(ctx echo.Context, boxId openapi.Id, params openapi.GetBoxesBoxIdQrParams) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のitem削除
 // (DELETE /items/{item_id})
 func (h handler) DeleteItemsItemId(ctx echo.Context, itemId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 // 特定のitem編集
 // (PUT /items/{item_id})
 func (h handler) PutItemsItemId(ctx echo.Context, itemId openapi.Id) error {
-	return echo.NewHTTPError(http.StatusInternalServerError, "not implemeneted")
+	return echo.NewHTTPError(http.StatusInternalServerError, "not implemented")
 }
 
 func bodyDumpHandler(c echo.Context, reqBody, resBody []byte) {
