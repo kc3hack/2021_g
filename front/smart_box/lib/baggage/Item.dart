@@ -1,42 +1,56 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import "package:smart_box/Base64Utility/Base64Utility.dart";
 
 ///
 /// 一つのアイテムを管理するクラス
 ///
 class Item {
+  int _id; //アイテムのid
   String _itemName = ""; // アイテムの名前
   String _description = ""; //アイテムの詳細
-  String _imagePath = ""; //画像のパス
+  String _base64Image = ""; //base64で表現された画像
 
-  Item(this._itemName, {String description = "", String imagePath = ""})
+  Item(this._id, this._itemName,
+      {String description = "", String base64Image = ""})
       : this._description = description,
-        this._imagePath = imagePath;
+        this._base64Image = base64Image;
+
+  int get id => this._id;
 
   String get itemName => this._itemName;
+
   String get description => this._description;
-  String get imagePath => this._imagePath;
+
+  String get imagePath => this._base64Image;
+
+  set itemName(String aString) {
+    this._itemName = aString;
+  }
+
+  set description(String aString) {
+    this._description = aString;
+  }
+
+  set base64Image(String aString) {
+    this._base64Image = aString;
+  }
 
   ///
-  /// imagePathからImage型を返す
+  /// Imageを返す
   ///
-  /// imagePathがURLならネットワークを通して、ディレクトリへのパスならそこから取得する。
-  /// imagePathに画像が存在しないならnullを返す
+  /// 画像が存在しないならnullを返す
   ///
   Image getImage() {
-    Image aImage;
-    print(this._imagePath);
-    try {
-      if (RegExp('^(http|https)').hasMatch(this._imagePath)) {
-        aImage = Image.network(this._imagePath);
-      } else {
-        aImage = Image.file(File(this._imagePath));
-      }
-    } catch (anException) {
-      print(anException);
+    if (this._base64Image == "") {
       return null;
     }
-    return aImage;
+
+    return base64ToImage(this._base64Image);
   }
+
+  @override
+  bool operator ==(Object other) => other is Item && other.id == id;
+
+  @override
+  int get hashCode => this._id;
 }
