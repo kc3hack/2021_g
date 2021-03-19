@@ -45,10 +45,10 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/BoxName'
-                image:
+                icon:
                   $ref: '#/components/schemas/Base64'
-                memo:
-                  $ref: '#/components/schemas/Memo'
+                note:
+                  $ref: '#/components/schemas/Note'
               required:
                 - name
       responses:
@@ -81,10 +81,10 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/BoxName'
-                image:
+                icon:
                   $ref: '#/components/schemas/Base64'
-                memo:
-                  $ref: '#/components/schemas/Memo'
+                note:
+                  $ref: '#/components/schemas/Note'
       responses:
         200:
           description: OK
@@ -189,10 +189,10 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/ItemName'
-                image:
+                icon:
                   $ref: '#/components/schemas/Base64'
-                memo:
-                  $ref: '#/components/schemas/Memo'
+                note:
+                  $ref: '#/components/schemas/Note'
               required:
                 - name
       responses:
@@ -225,10 +225,10 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/ItemName'
-                image:
+                icon:
                   $ref: '#/components/schemas/Base64'
-                memo:
-                  $ref: '#/components/schemas/Memo'
+                note:
+                  $ref: '#/components/schemas/Note'
       responses:
         200:
           description: OK
@@ -264,7 +264,7 @@ components:
     Time:
       type: string
       format: HH:MM:SS
-      example: '12:59:59'
+      example: 12:59:59
 
     Datetime:
       type: string
@@ -274,7 +274,7 @@ components:
     URL:
       type: string
       format: url
-      example: 'https://example.com'
+      example: https://example.com
 
     Count:
       type: integer
@@ -298,11 +298,11 @@ components:
       maxLength: 255
       example: TestItem
 
-    Memo:
+    Note:
       type: string
       minLength: 0
       maxLength: 255
-      example: TestMemo
+      example: TestNote
 
     QRPaperSize:
       type: string
@@ -311,6 +311,15 @@ components:
     QRPlacementType:
       type: string
       enum: [type1, type2]
+
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Name
+      required:
+        - name
 
     Box:
       type: object
@@ -321,21 +330,37 @@ components:
           $ref: '#/components/schemas/Datetime'
         updated_at:
           $ref: '#/components/schemas/Datetime'
+        created_by:
+          $ref: '#/components/schemas/User'
+        updated_by:
+          $ref: '#/components/schemas/User'
+        writers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        readers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
         name:
           $ref: '#/components/schemas/BoxName'
-        image:
+        icon:
           $ref: '#/components/schemas/Base64'
-        memo:
-          $ref: '#/components/schemas/Memo'
+        note:
+          $ref: '#/components/schemas/Note'
         item_count:
           $ref: '#/components/schemas/Count'
       required:
         - id
         - created_at
         - updated_at
+        - created_by
+        - updated_by
+        - writers
+        - readers
         - name
-        - image
-        - memo
+        - icon
+        - note
         - item_count
 
     Item:
@@ -347,19 +372,25 @@ components:
           $ref: '#/components/schemas/Datetime'
         updated_at:
           $ref: '#/components/schemas/Datetime'
+        created_by:
+          $ref: '#/components/schemas/User'
+        updated_by:
+          $ref: '#/components/schemas/User'
         name:
           $ref: '#/components/schemas/ItemName'
-        image:
+        icon:
           $ref: '#/components/schemas/Base64'
-        memo:
-          $ref: '#/components/schemas/Memo'
+        note:
+          $ref: '#/components/schemas/Note'
       required:
         - id
         - created_at
         - updated_at
+        - created_by
+        - updated_by
         - name
-        - image
-        - memo
+        - icon
+        - note
 
   responses:
     200:
