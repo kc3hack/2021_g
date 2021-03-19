@@ -37,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     widget.setBottomBarIndex(0);
                   },
                   child: Container(
-                    width: size.width * 0.14,
+                    width: size.width * 0.13,
                     height: size.height * 0.1,
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -68,7 +68,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     widget.setBottomBarIndex(2);
                   },
                   child: Container(
-                    width: size.width * 0.14,
+                    width: size.width * 0.13,
                     height: size.height * 0.1,
                     decoration: BoxDecoration(
                       image: DecorationImage(
