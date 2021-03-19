@@ -36,7 +36,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
       this.boxList.add(Box(i, boxName,
           items: itemList,
           description:
-              "あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ"));
+              "QRコードは、1994年に自動車部品メーカーであるデンソーの開発部門が発明したマトリックス型二次元コードである。 「QR」は Quick Response の頭字語であり、高速読み取りを目的の一つとしている名称である。「QRコード」はデンソーウェーブの登録商標である。"));
     }
     return;
   }

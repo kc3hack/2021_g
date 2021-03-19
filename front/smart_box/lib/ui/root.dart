@@ -15,14 +15,14 @@ class RootWidget extends StatefulWidget {
 class _RootWidgetState extends State<RootWidget> {
   static int selectedIndex = 0;
 
-  var _routes = [
+  List<Widget> _routes = [
     BoxListWidget(),
     Camera(),
     Camera(),
   ];
 
   // まだ使っていない _selectedIndexを共有する
-  setBottomBarIndex(index) {
+  void setBottomBarIndex(index) {
     setState(() {
       selectedIndex = index;
     });
