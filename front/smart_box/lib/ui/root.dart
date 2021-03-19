@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_box/ui/ItemListWidget.dart';
+import 'package:smart_box/ui/BoxListWidget.dart';
 
 import 'Camera.dart';
-
 
 class RootWidget extends StatefulWidget {
   RootWidget({Key key}) : super(key: key);
@@ -29,7 +28,7 @@ class _RootWidgetState extends State<RootWidget> {
   ];
 
   var _routes = [
-    Camera(),
+    BoxListWidget(),
     Camera(),
     Camera(),
   ];
@@ -43,30 +42,21 @@ class _RootWidgetState extends State<RootWidget> {
     }
   }
 
-
   BottomNavigationBarItem _UpdateActiveState(int index) {
     return BottomNavigationBarItem(
-        icon: Icon(
-          _footerIcons[index],
-        ),
-        title: Text(
-          _footerItemNames[index],
-          style: TextStyle(
-          ),
-        )
+      icon: Icon(
+        _footerIcons[index],
+      ),
+      label: _footerItemNames[index],
     );
   }
 
   BottomNavigationBarItem _UpdateDeactiveState(int index) {
     return BottomNavigationBarItem(
-        icon: Icon(
-          _footerIcons[index],
-        ),
-        title: Text(
-          _footerItemNames[index],
-          style: TextStyle(
-          ),
-        )
+      icon: Icon(
+        _footerIcons[index],
+      ),
+      label: _footerItemNames[index],
     );
   }
 
@@ -78,7 +68,6 @@ class _RootWidgetState extends State<RootWidget> {
       _selectedIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
