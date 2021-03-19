@@ -318,6 +318,8 @@ components:
         name:
           type: string
           example: Name
+      required:
+        - name
 
     Box:
       type: object
@@ -352,6 +354,10 @@ components:
         - id
         - created_at
         - updated_at
+        - created_by
+        - updated_by
+        - writers
+        - readers
         - name
         - icon
         - note
@@ -380,6 +386,8 @@ components:
         - id
         - created_at
         - updated_at
+        - created_by
+        - updated_by
         - name
         - icon
         - note
