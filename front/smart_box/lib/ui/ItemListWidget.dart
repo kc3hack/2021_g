@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
 
@@ -22,11 +23,42 @@ class _ItemListWidgetState extends State<ItemListWidget> {
     this.aBox = widget.aBox;
   }
 
+  ///
+  /// 最初のボックスの詳細のWidget
+  ///
+  Widget _makeBoxDescription() {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            child: Text(
+              aBox.boxName,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+            child: Text(
+              aBox.description,
+              style: TextStyle(fontSize: 13),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// 最後に空の要素を加えることでボタンが押しやすいように
+  ///
   @override
   Widget build(BuildContext context) {
-    List<Widget> itemWidgetList =
-        this.aBox.items.map((item) => ItemWidget(item)).toList();
-
     return Scaffold(
         floatingActionButton: Container(
           width: 70,
@@ -42,23 +74,19 @@ class _ItemListWidgetState extends State<ItemListWidget> {
           ),
         ),
         body: Container(
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Text(
-                        this.aBox.boxName,
-                        style: TextStyle(fontSize: 16),
-                      )),
-                  Flexible(
-                      child: GridView.extent(
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    maxCrossAxisExtent: 200,
-                    children: itemWidgetList,
-                  ))
-                ])));
+            margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: StaggeredGridView.extentBuilder(
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              maxCrossAxisExtent: 200,
+              itemCount: aBox.items.length + 2,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) return this._makeBoxDescription();
+                if (index == aBox.items.length + 1) return Container();
+                return ItemWidget(aBox.getItemByIndex(index - 1));
+              },
+              staggeredTileBuilder: (int index) => StaggeredTile.extent(
+                  (index == 0) ? 100 : 1, (index == 0) ? 150 : 170),
+            )));
   }
 }

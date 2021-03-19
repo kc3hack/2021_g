@@ -135,6 +135,8 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   ///
   /// ボックスのリストを表示するWidget
   ///
+  /// 最後に空の要素を加えることでボタンが押しやすいように
+  ///
   Scaffold _makeBoxList() {
     return Scaffold(
         appBar: AppBar(
@@ -170,8 +172,12 @@ class _BoxListWidgetState extends State<BoxListWidget> {
         body: FutureBuilder(
             future: _updateBoxList(),
             builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-              List<Widget> aList =
-                  this.boxList.map((box) => _makeBoxTile(box)).toList();
+              List<Widget> aList = [];
+              this.boxList.forEach((box) => aList.add(_makeBoxTile(box)));
+              //空の要素を追加
+              aList.add(Container(
+                height: 100,
+              ));
               return Container(
                   child: Column(children: [
                 Container(
