@@ -225,7 +225,7 @@ paths:
               properties:
                 name:
                   $ref: '#/components/schemas/ItemName'
-                image:
+                icon:
                   $ref: '#/components/schemas/Base64'
                 note:
                   $ref: '#/components/schemas/Note'
