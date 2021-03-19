@@ -9,11 +9,18 @@ class Item {
   String _itemName = ""; // アイテムの名前
   String _description = ""; //アイテムの詳細
   String _base64Image = ""; //base64で表現された画像
+  DateTime _createdAt; //作成された時刻
+  DateTime _updatedAt; //更新された時刻
 
   Item(this._id, this._itemName,
-      {String description = "", String base64Image = ""})
+      {String description = "",
+      String base64Image = "",
+      DateTime createdAt,
+      DateTime updatedAt})
       : this._description = description,
-        this._base64Image = base64Image;
+        this._base64Image = base64Image,
+        this._createdAt = createdAt == null ? DateTime.now() : createdAt,
+        this._updatedAt = updatedAt == null ? DateTime.now() : updatedAt;
 
   int get id => this._id;
 
@@ -22,6 +29,8 @@ class Item {
   String get description => this._description;
 
   String get imagePath => this._base64Image;
+  DateTime get createdAt => this._createdAt;
+  DateTime get updatedAt => this._updatedAt;
 
   set itemName(String aString) {
     this._itemName = aString;
@@ -34,6 +43,8 @@ class Item {
   set base64Image(String aString) {
     this._base64Image = aString;
   }
+
+  set updatedAt(DateTime updatedAt) => this._updatedAt = updatedAt;
 
   ///
   /// Imageを返す
