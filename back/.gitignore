@@ -1,0 +1,5 @@
+database/data/*
+
+*.env
+
+*.log

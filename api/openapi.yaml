@@ -1,0 +1,397 @@
+openapi: 3.0.3
+info:
+  title: kc3_2021_g
+  version: 0.0.0
+servers:
+  - url: https://1f2e643e-b69a-43b3-8731-606a8eedde30.mock.pstmn.io/
+    description: モックサーバー
+  - url: http://localhost:8080
+    description: ローカル環境
+tags:
+  - name: box
+  - name: item
+  - name: qr
+
+paths:
+  /boxes:
+    get:
+      tags:
+        - box
+      summary: 'box一覧取得'
+      security:
+        - Authorization: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Box'
+
+    post:
+      tags:
+        - box
+      summary: 'box作成'
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/BoxName'
+                image:
+                  $ref: '#/components/schemas/Base64'
+                memo:
+                  $ref: '#/components/schemas/Memo'
+              required:
+                - name
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Box'
+
+  /boxes/{box_id}:
+    put:
+      tags:
+        - box
+      summary: '特定のbox編集'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/BoxName'
+                image:
+                  $ref: '#/components/schemas/Base64'
+                memo:
+                  $ref: '#/components/schemas/Memo'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Box'
+
+    delete:
+      tags:
+        - box
+      summary: '特定のbox削除'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        204:
+          $ref: '#/components/responses/204'
+
+  /boxes/{box_id}/qr:
+    get:
+      tags:
+        - box
+        - qr
+      summary: '特定のboxのQR取得'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+        - name: size
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/QRPaperSize'
+        - name: type
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/QRPlacementType'
+      security:
+        - Authorization: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Base64'
+
+  /boxes/{box_id}/items:
+    get:
+      tags:
+        - box
+        - item
+      summary: '特定のboxのitem一覧取得'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+
+    post:
+      tags:
+        - box
+        - item
+      summary: '特定のboxにitem追加'
+      parameters:
+        - name: box_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/ItemName'
+                image:
+                  $ref: '#/components/schemas/Base64'
+                memo:
+                  $ref: '#/components/schemas/Memo'
+              required:
+                - name
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+
+  /items/{item_id}:
+    put:
+      tags:
+        - item
+      summary: '特定のitem編集'
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/ItemName'
+                image:
+                  $ref: '#/components/schemas/Base64'
+                memo:
+                  $ref: '#/components/schemas/Memo'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+
+    delete:
+      tags:
+        - item
+      summary: '特定のitem削除'
+      parameters:
+        - name: item_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Id'
+      security:
+        - Authorization: []
+      responses:
+        204:
+          $ref: '#/components/responses/204'
+
+components:
+  schemas:
+    Id:
+      type: integer
+      x-go-type: uint64
+      minimum: 1
+      example: 1
+
+    Time:
+      type: string
+      format: HH:MM:SS
+      example: '12:59:59'
+
+    Datetime:
+      type: string
+      format: date-time
+      example: 2020-01-01T12:59:59Z
+
+    URL:
+      type: string
+      format: url
+      example: 'https://example.com'
+
+    Count:
+      type: integer
+      example: 10
+
+    Base64:
+      type: string
+      format: byte
+      description: base64 encoded characters
+      example: base64 encoded characters
+
+    BoxName:
+      type: string
+      minLength: 1
+      maxLength: 255
+      example: TestBOX
+
+    ItemName:
+      type: string
+      minLength: 1
+      maxLength: 255
+      example: TestItem
+
+    Memo:
+      type: string
+      minLength: 0
+      maxLength: 255
+      example: TestMemo
+
+    QRPaperSize:
+      type: string
+      enum: [a4, b5]
+
+    QRPlacementType:
+      type: string
+      enum: [type1, type2]
+
+    Box:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/Datetime'
+        updated_at:
+          $ref: '#/components/schemas/Datetime'
+        name:
+          $ref: '#/components/schemas/BoxName'
+        image:
+          $ref: '#/components/schemas/Base64'
+        memo:
+          $ref: '#/components/schemas/Memo'
+        item_count:
+          $ref: '#/components/schemas/Count'
+      required:
+        - id
+        - created_at
+        - updated_at
+        - name
+        - image
+        - memo
+        - item_count
+
+    Item:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        created_at:
+          $ref: '#/components/schemas/Datetime'
+        updated_at:
+          $ref: '#/components/schemas/Datetime'
+        name:
+          $ref: '#/components/schemas/ItemName'
+        image:
+          $ref: '#/components/schemas/Base64'
+        memo:
+          $ref: '#/components/schemas/Memo'
+      required:
+        - id
+        - created_at
+        - updated_at
+        - name
+        - image
+        - memo
+
+  responses:
+    200:
+      description: OK
+    201:
+      description: Created
+    204:
+      description: No Content
+    400:
+      description: Bad Request
+    401:
+      description: Unauthorized
+    403:
+      description: ForbIdden
+    404:
+      description: Not Found
+    # cors:
+    #   description: Default response for CORS method
+    #   headers:
+    #     Access-Control-Allow-Headers:
+    #       schema:
+    #         type: 'string'
+    #     Access-Control-Allow-Methods:
+    #       schema:
+    #         type: 'string'
+    #     Access-Control-Allow-Origin:
+    #       schema:
+    #         type: 'string'
+
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: IDトークンを付与

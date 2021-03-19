@@ -23,7 +23,7 @@ services:
 
   api:
     build:
-      context: ./go
+      context: ./
       target: build
     restart: always
     tty: true
@@ -36,10 +36,8 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_NAME: database # = MYSQL_DATABASE
-      FIREBASE_SDK_CREDENTIALS: ${FIREBASE_SDK_CREDENTIALS}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     volumes:
-      - ./go:/go/src
+      - ./:/go/src
     depends_on:
       - db
     networks:

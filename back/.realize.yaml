@@ -1,0 +1,24 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+  - name: src
+    path: .
+    commands:
+      build:
+        status: true
+        method: go build -o main
+      run:
+        status: true
+        method: ./main
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - vendor
