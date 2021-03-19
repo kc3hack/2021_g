@@ -16,10 +16,12 @@ class Box {
 
   Box(this._id, this._boxName,
       {String description = "",
+      String base64Image = "",
       List<Item> items = const [],
       DateTime createdAt,
       DateTime updatedAt})
       : this._description = description,
+        this._base64Image = base64Image,
         this._items = items,
         this._createdAt = createdAt == null ? DateTime.now() : createdAt,
         this._updatedAt = updatedAt == null ? DateTime.now() : updatedAt;

@@ -28,7 +28,7 @@ class Item {
 
   String get description => this._description;
 
-  String get imagePath => this._base64Image;
+  String get base64Image => this._base64Image;
   DateTime get createdAt => this._createdAt;
   DateTime get updatedAt => this._updatedAt;
 
