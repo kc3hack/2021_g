@@ -28,23 +28,6 @@ class _ItemListWidgetState extends State<ItemListWidget> {
         this.aBox.items.map((item) => ItemWidget(item)).toList();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("アイテム一覧"),
-          actions: [
-            Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    size: 40,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  onPressed: () {
-                    print("search button pushed");
-                  },
-                ))
-          ],
-        ),
         floatingActionButton: Container(
           width: 70,
           height: 70,
