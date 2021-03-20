@@ -1,0 +1,4 @@
+development:
+  dialect: mysql
+  datasource: user:password@tcp(localhost:3306)/database?parseTime=true&collation=utf8mb4_bin # 要変更
+  dir: migration
