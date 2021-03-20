@@ -28,7 +28,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   ///
   Future<void> _updateBoxList() async {
     this.boxList.clear();
-    this.boxList = await getBoxes("token");
+    this.boxList = await getBoxes(widget.widgetHolderState.getIdToken());
     // for (int i = 0; i < 5; i++) {
     //   String boxName = "テストボックス" + i.toString();
     //   List<Item> itemList = [];

@@ -34,6 +34,7 @@ String imageToBase64(File imageFile) {
     print(exception);
     return "";
   }
-
+  print(base64String);
+  print(base64String.length);
   return base64String;
 }
