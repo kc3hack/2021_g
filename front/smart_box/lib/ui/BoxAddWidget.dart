@@ -1,5 +1,11 @@
+import "dart:io";
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_box/Base64Utility/Base64Utility.dart';
+import 'package:smart_box/Camera/Camera.dart';
+import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/WidgetHolder.dart';
 
 class BoxAddWidget extends StatefulWidget {
@@ -13,6 +19,7 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
   final formKey = GlobalKey<FormState>();
   String _boxName = "";
   String _description = "";
+  String _base64Image;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +50,27 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                               ///
                               /// 写真をとる
                               ///
-                              onTap: () async {},
+                              onTap: () async {
+                                String imagePath = await takePicture();
+                                if (imagePath != "") {
+                                  ///画面回転で落ちる
+                                  if (!mounted) {
+                                    File(imagePath).delete();
+                                    return;
+                                  }
+                                  setState(() {
+                                    this._base64Image =
+                                        imageToBase64(File(imagePath));
+                                    File(imagePath).delete();
+                                  });
+                                }
+                              },
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 height: 200,
-                                child: Image.asset("images/addPhoto.png"),
+                                child: (this._base64Image == null)
+                                    ? Image.asset("images/addPhoto.png")
+                                    : base64ToImage(this._base64Image),
                               )),
                           Container(
                             alignment: Alignment.centerLeft,
@@ -61,14 +84,23 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 5, 0, 10),
                             color: Colors.white,
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                hintText: "入力してください",
-                              ),
-                              onSaved: (value) {
-                                this._boxName = value;
-                              },
-                            ),
+                            child: Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: TextFormField(
+                                  maxLines: 1,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white.withAlpha(0))),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white.withAlpha(0))),
+                                    hintText: "入力してください",
+                                  ),
+                                  onSaved: (value) {
+                                    this._boxName = value;
+                                  },
+                                )),
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
@@ -82,15 +114,23 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 5, 0, 20),
                             color: Colors.white,
-                            child: TextFormField(
-                              maxLines: 5,
-                              decoration: InputDecoration(
-                                hintText: "入力してください",
-                              ),
-                              onSaved: (value) {
-                                this._description = value;
-                              },
-                            ),
+                            child: Container(
+                                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: TextFormField(
+                                  maxLines: 5,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white.withAlpha(0))),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white.withAlpha(0))),
+                                    hintText: "入力してください",
+                                  ),
+                                  onSaved: (value) {
+                                    this._description = value;
+                                  },
+                                )),
                           ),
                         ]),
                         Container(
@@ -107,13 +147,19 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                                 onPrimary: Colors.white,
                                 shape: const StadiumBorder(),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 ///
                                 ///保存処理
                                 ///
                                 this.formKey.currentState.save();
                                 print(this._boxName);
                                 print(this._description);
+                                await createBox(
+                                    Box(1, this._boxName,
+                                        description: this._description,
+                                        base64Image: this._base64Image),
+                                    "token");
+                                widget.widgetHolderState.onWillPopHandler();
                               },
                             )),
                         Container(

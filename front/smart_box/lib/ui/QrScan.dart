@@ -7,12 +7,12 @@ import "package:smart_box/barcode_reader/BarcodeReader.dart";
 ///
 /// バーコード読み込みテスト用Widget
 ///
-class Camera extends StatefulWidget {
+class QrScan extends StatefulWidget {
   @override
-  _CameraState createState() => _CameraState();
+  _QrScanState createState() => _QrScanState();
 }
 
-class _CameraState extends State<Camera> {
+class _QrScanState extends State<QrScan> {
   String _scanResult = '';
   Box aBox;
 
