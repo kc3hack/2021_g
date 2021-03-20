@@ -6,7 +6,7 @@ import(
 
 type BoxId int64
 
-type Code []byte
+type Code string
 
 type Box struct {
 	ID   BoxId `gorm:"primary_key"`

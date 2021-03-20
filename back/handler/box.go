@@ -75,7 +75,7 @@ func (h Handler) PostBoxes(ctx echo.Context) error {
 	}
 
 	res := openapi.Box{
-		Id: openapi.Id(resBox.Id),
+		Id: openapi.Id(resBox.ID),
 	}
 
 	return ctx.JSON(http.StatusCreated, res)
@@ -103,7 +103,7 @@ func (h Handler) PutBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	res := openapi.Box{
-		Id: openapi.Id(resBox.Id),
+		Id: openapi.Id(resBox.ID),
 		// TODO
 	}
 
