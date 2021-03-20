@@ -30,17 +30,19 @@ class ItemWidget extends StatelessWidget {
             onTap: touchEvent,
             child: Column(
               children: <Widget>[
-                Flexible(
-                    child: Container(
+                Expanded(
+                  flex: 4,
                   child: image,
-                )),
-                Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      this.anItem.itemName,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    )),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          this.anItem.itemName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ))),
               ],
             )));
   }

@@ -9,10 +9,10 @@ import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/barcode_reader/BarcodeReader.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/WidgetHolder.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
 
 class ItemAddWidget extends StatefulWidget {
-  final WidgetHolderState widgetHolderState;
+  final BoxWidgetHolderState widgetHolderState;
   final Box aBox;
   ItemAddWidget(this.aBox, this.widgetHolderState);
   @override

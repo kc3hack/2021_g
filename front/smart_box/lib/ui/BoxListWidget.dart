@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/BoxAddWidget.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
 import 'package:smart_box/ui/ItemListWidget.dart';
-import 'package:smart_box/ui/WidgetHolder.dart';
 
 ///
 /// ボックス一覧画面のWidget
@@ -13,7 +13,7 @@ import 'package:smart_box/ui/WidgetHolder.dart';
 /// これによりbottomNavigationを表示したまま遷移している
 ///
 class BoxListWidget extends StatefulWidget {
-  final WidgetHolderState widgetHolderState;
+  final BoxWidgetHolderState widgetHolderState;
   BoxListWidget(this.widgetHolderState);
   @override
   _BoxListWidgetState createState() => _BoxListWidgetState();
@@ -57,6 +57,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   /// 一覧に表示する1つのボックスを表すWidgetを作成する
   ///
   Container _makeBoxTile(Box box) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
         color: Colors.white,
         margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -70,8 +71,9 @@ class _BoxListWidgetState extends State<BoxListWidget> {
                 style: TextStyle(fontSize: 16),
               )),
           leading: Container(
+            width: size.width / 5,
             margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: box.getImage() == null
+            child: (box.getImage() == null)
                 ? Image.asset(
                     "images/dummy.png",
                     fit: BoxFit.cover,

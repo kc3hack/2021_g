@@ -6,14 +6,14 @@ import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/ItemAddWidget.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
-import 'package:smart_box/ui/WidgetHolder.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
 
 ///
 /// アイテム一覧を表示するWidget
 ///
 class ItemListWidget extends StatefulWidget {
   final Box aBox; //ボックス
-  final WidgetHolderState widgetHolderState;
+  final BoxWidgetHolderState widgetHolderState;
   ItemListWidget(this.aBox, this.widgetHolderState);
   @override
   _ItemListWidgetState createState() => _ItemListWidgetState();

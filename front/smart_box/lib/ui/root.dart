@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_box/ui/WidgetHolder.dart';
-
-import 'BottomNavBar.dart';
-import 'QrScan.dart';
+import 'package:smart_box/ui/BottomNavBar.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
+import 'package:smart_box/ui/QrScan.dart';
+import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 
 class RootWidget extends StatefulWidget {
   RootWidget({Key key}) : super(key: key);
@@ -16,9 +16,9 @@ class _RootWidgetState extends State<RootWidget> {
   static int selectedIndex = 0;
 
   List<Widget> _routes = [
-    WidgetHolder(),
+    new BoxWidgetHolder(),
     QrScan(),
-    Container(),
+    new QrWidgetHolder(),
   ];
 
   // まだ使っていない _selectedIndexを共有する
@@ -26,6 +26,12 @@ class _RootWidgetState extends State<RootWidget> {
     setState(() {
       selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override

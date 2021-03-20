@@ -6,10 +6,10 @@ import 'package:smart_box/Base64Utility/Base64Utility.dart';
 import 'package:smart_box/Camera/Camera.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/WidgetHolder.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
 
 class BoxAddWidget extends StatefulWidget {
-  final WidgetHolderState widgetHolderState;
+  final BoxWidgetHolderState widgetHolderState;
   BoxAddWidget(this.widgetHolderState);
   @override
   _BoxAddWidgetState createState() => _BoxAddWidgetState();
