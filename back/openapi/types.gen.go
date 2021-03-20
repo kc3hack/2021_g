@@ -139,3 +139,4 @@ type PostBoxesBoxIdItemsJSONRequestBody PostBoxesBoxIdItemsJSONBody
 
 // PutItemsItemIdJSONRequestBody defines body for PutItemsItemId for application/json ContentType.
 type PutItemsItemIdJSONRequestBody PutItemsItemIdJSONBody
+

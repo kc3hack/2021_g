@@ -27,3 +27,7 @@ func DSN() string {
 		os.Getenv("DB_NAME"),
 	) + "?parseTime=true&collation=utf8mb4_bin"
 }
+
+func AppLink() string {
+	return "http://smart_box.com"
+}

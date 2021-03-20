@@ -11,6 +11,26 @@ import (
 	"gorm.io/gorm/logger"
 )
 
+var count = 0
+
+func connect(logger logger.Interface) (*gorm.DB, error) {
+	db, err := gorm.Open(mysql.Open(config.DSN()), &gorm.Config{
+		Logger: logger,
+	})
+	if err != nil {
+		log.Println("Not ready. Retry connecting...")
+		time.Sleep(time.Second)
+		count++
+		log.Println(count)
+		if count > 30 {
+			panic(err)
+		}
+		return connect(logger)
+	}
+	log.Println("Successfully")
+	return db, nil
+}
+
 func NewDBConn() *gorm.DB {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -20,10 +40,7 @@ func NewDBConn() *gorm.DB {
 			Colorful:      false,        // Disable color
 		},
 	)
-
-	dbConn, err := gorm.Open(mysql.Open(config.DSN()), &gorm.Config{
-		Logger: newLogger,
-	})
+	dbConn, err := connect(newLogger)
 	if err != nil {
 		panic("failed to connect database")
 	}
