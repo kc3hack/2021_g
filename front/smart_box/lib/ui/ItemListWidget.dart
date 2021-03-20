@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
 
 ///
@@ -16,11 +18,17 @@ class ItemListWidget extends StatefulWidget {
 
 class _ItemListWidgetState extends State<ItemListWidget> {
   Box aBox;
+  List<Item> items = [];
 
   @override
   void initState() {
     super.initState();
     this.aBox = widget.aBox;
+    getItems(this.aBox.id, "token").then((items) {
+      setState(() {
+        this.items = items;
+      });
+    });
   }
 
   ///
@@ -79,11 +87,11 @@ class _ItemListWidgetState extends State<ItemListWidget> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               maxCrossAxisExtent: 200,
-              itemCount: aBox.items.length + 2,
+              itemCount: this.items.length + 2,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) return this._makeBoxDescription();
-                if (index == aBox.items.length + 1) return Container();
-                return ItemWidget(aBox.getItemByIndex(index - 1));
+                if (index == this.items.length + 1) return Container();
+                return ItemWidget(this.items[index - 1]);
               },
               staggeredTileBuilder: (int index) => StaggeredTile.extent(
                   (index == 0) ? 100 : 1, (index == 0) ? 150 : 170),

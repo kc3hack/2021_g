@@ -6,7 +6,7 @@ import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/json_utility/JsonUtility.dart';
 
 final String baseUrl =
-    "https://1f2e643e-b69a-43b3-8731-606a8eedde30.mock.pstmn.io/";
+    "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
 
 enum ClientRequest { POST, PUT, GET, DELETE }
 

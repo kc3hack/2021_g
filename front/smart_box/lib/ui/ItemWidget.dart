@@ -18,7 +18,7 @@ class ItemWidget extends StatelessWidget {
 
   Widget _makeItemWidget() {
     Widget image = this.anItem.getImage();
-    if (image == null) image = Container();
+    if (image == null) image = Image.asset("images/dummy.png");
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
