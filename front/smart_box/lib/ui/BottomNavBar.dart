@@ -92,16 +92,18 @@ class MyCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = new Paint()
-      ..color = Colors.black12.withAlpha(25)
+      ..color = Colors.black12.withAlpha(15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5;
 
     Path path = Path();
-    path.moveTo(0, 10); // Start
-    path.lineTo(size.width * 0.35, 10);
-    path.quadraticBezierTo(size.width * 0.4, -20, size.width * 0.5, -20);
-    path.quadraticBezierTo(size.width * 0.6, -20, size.width * 0.65, 10);
-    path.lineTo(size.width, 10);
+    path.moveTo(0, 15); // Start
+    path.lineTo(size.width * 0.30, 15);
+    path.quadraticBezierTo(size.width * 0.35, 15, size.width * 0.4, 0);
+    path.quadraticBezierTo(size.width * 0.45, -10, size.width * 0.5, -10);
+    path.quadraticBezierTo(size.width * 0.55, -10, size.width * 0.6, 0);
+    path.quadraticBezierTo(size.width * 0.65, 15, size.width * 0.7, 15);
+    path.lineTo(size.width, 15);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
@@ -111,11 +113,13 @@ class MyCustomPainter extends CustomPainter {
       ..color = Colors.white
       ..style = PaintingStyle.fill;
     path = Path();
-    path.moveTo(0, 10); // Start
-    path.lineTo(size.width * 0.35, 10);
-    path.quadraticBezierTo(size.width * 0.4, -20, size.width * 0.5, -20);
-    path.quadraticBezierTo(size.width * 0.6, -20, size.width * 0.65, 10);
-    path.lineTo(size.width, 10);
+    path.moveTo(0, 15); // Start
+    path.lineTo(size.width * 0.30, 15);
+    path.quadraticBezierTo(size.width * 0.35, 15, size.width * 0.4, 0);
+    path.quadraticBezierTo(size.width * 0.45, -10, size.width * 0.5, -10);
+    path.quadraticBezierTo(size.width * 0.55, -10, size.width * 0.6, 0);
+    path.quadraticBezierTo(size.width * 0.65, 15, size.width * 0.7, 15);
+    path.lineTo(size.width, 15);
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
