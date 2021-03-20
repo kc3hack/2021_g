@@ -1,5 +1,10 @@
+import "dart:io";
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:smart_box/Camera/Camera.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
@@ -14,6 +19,49 @@ class QrResultWidget extends StatefulWidget {
 }
 
 class _QrResultWidgetState extends State<QrResultWidget> {
+  ///
+  /// ストレージの許可を要請する
+  ///
+  Future<void> showRequestDialog() async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('QRコードを保存するためにはストレージの許可が必要です'),
+            content: Text("QRコードを保存するために使用します"),
+            actions: <Widget>[
+              TextButton(
+                child: Text("キャンセル"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              TextButton(
+                child: Text("設定"),
+                onPressed: () async {
+                  openAppSettings();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  ///
+  /// QRコードを作成する
+  ///
+  Future<void> createQr() async {
+    if (await Permission.storage.isPermanentlyDenied) {
+      await showRequestDialog();
+    }
+    if (await Permission.storage.isUndetermined) {
+      await showRequestDialog();
+    }
+
+    if (await Permission.storage.isGranted) {
+      print(ImageGallerySaver.saveImage(
+          File(await takePicture()).readAsBytesSync()));
+    }
+  }
+
   ///
   /// 一覧に表示する1つのボックスを表すWidgetを作成する
   ///
@@ -36,6 +84,13 @@ class _QrResultWidgetState extends State<QrResultWidget> {
                     style: TextStyle(fontSize: 14),
                   )))
         ]));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    createQr();
   }
 
   @override
