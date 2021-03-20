@@ -38,10 +38,7 @@ Item jsonToItem(String jsonString) {
 
 List<Item> jsonToItems(String jsonString) {
   List<dynamic> jsonItems = json.decode(jsonString);
-  List<Item> items = [];
-  for (Map<String, dynamic> itemMap in jsonItems) {
-    items.add(_mapToItem(itemMap));
-  }
+  List<Item> items = jsonItems.map((itemMap) => (_mapToItem(itemMap))).toList();
   return items;
 }
 
@@ -52,9 +49,6 @@ Box jsonToBox(String jsonString) {
 
 List<Box> jsonToBoxes(String jsonString) {
   List<dynamic> jsonBoxes = json.decode(jsonString);
-  List<Box> boxes = [];
-  for (Map<String, dynamic> boxMap in jsonBoxes) {
-    boxes.add(_mapToBox(boxMap));
-  }
+  List<Box> boxes = jsonBoxes.map((boxMap) => (_mapToBox(boxMap))).toList();
   return boxes;
 }

@@ -52,7 +52,7 @@ class Item {
   /// 画像が存在しないならnullを返す
   ///
   Image getImage() {
-    if (this._base64Image == "") {
+    if (this._base64Image == "" || this._base64Image == null) {
       return null;
     }
 

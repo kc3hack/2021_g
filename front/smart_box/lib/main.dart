@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
         primaryColor: Colors.white,
+        accentColor: Colors.cyan,
         scaffoldBackgroundColor: Color.fromARGB(255, 236, 242, 242),
       ),
       home: RootWidget(),
