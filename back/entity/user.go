@@ -2,6 +2,8 @@ package entity
 
 type UserId string
 
-type User struct{}
+type User struct {
+	Id UserId
+}
 
 type Users []User
