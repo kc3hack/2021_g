@@ -78,7 +78,7 @@ class _ItemListWidgetState extends State<ItemListWidget> {
               size: 35,
               color: Colors.white,
             ),
-            onPressed: () => print("pushed"),
+            onPressed: () => print("item add"),
             backgroundColor: Color.fromARGB(255, 238, 152, 157),
           ),
         ),
@@ -111,6 +111,7 @@ class _ItemListWidgetState extends State<ItemListWidget> {
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: widget.widgetHolderState.onWillPopHandler,
+              color: Theme.of(context).accentColor,
             ),
             actions: [
               Container(
