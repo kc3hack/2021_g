@@ -45,9 +45,9 @@ func (b *Box) PostBoxes(box *entity.Box) (*entity.Box, error) {
 	if err != nil {
 		return nil, err
 	}
-	filePath := framework.NewQRImg(box.Id)
+	filePath := framework.NewQRImg(box.ID)
 	base64Qr := framework.ImageBase64Encode(filePath)
-	box.Code = base64Qr
+	box.Code = entity.Code(base64Qr)
 	box, err = b.boxRepo.Update(box)
 	if err != nil {
 		return nil, err
