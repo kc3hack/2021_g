@@ -13,6 +13,9 @@ import (
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+
+	// (GET /)
+	Get(ctx echo.Context) error
 	// box一覧取得
 	// (GET /boxes)
 	GetBoxes(ctx echo.Context) error
@@ -45,6 +48,15 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// Get converts echo context to params.
+func (w *ServerInterfaceWrapper) Get(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.Get(ctx)
+	return err
 }
 
 // GetBoxes converts echo context to params.
@@ -239,6 +251,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.GET(baseURL+"/", wrapper.Get)
 	router.GET(baseURL+"/boxes", wrapper.GetBoxes)
 	router.POST(baseURL+"/boxes", wrapper.PostBoxes)
 	router.DELETE(baseURL+"/boxes/:box_id", wrapper.DeleteBoxesBoxId)

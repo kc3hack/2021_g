@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"github.com/kc3hack/2021_g/entity"
+	"github.com/kc3hack/2021_g/framework"
 )
 
 type boxRepository interface {
@@ -48,6 +49,10 @@ func (b *Box) PostBoxes(box *entity.Box) (*entity.Box, error) {
 	if err != nil {
 		return nil, err
 	}
+	filePath := framework.NewQRImg(box.Id)
+	base64Qr := framework.ImageBase64Encode(filePath)
+	box.Code = base64Qr
+	box, err = b.boxRepo.Update(box)
 	return box, nil
 }
 

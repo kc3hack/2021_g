@@ -1,7 +1,10 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/kc3hack/2021_g/usecase"
+	"github.com/labstack/echo/v4"
 )
 
 type Handler struct {
@@ -16,4 +19,8 @@ func NewHandler(boxUC *usecase.Box, itemUC *usecase.Item, userUC *usecase.User) 
 		ItemUC: itemUC,
 		UserUC: userUC,
 	}
+}
+
+func (h Handler) Get(ctx echo.Context) error {
+	return ctx.JSON(http.StatusOK, "Hello world!")
 }

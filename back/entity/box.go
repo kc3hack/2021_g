@@ -5,7 +5,8 @@ type BoxId int64
 type Code []byte
 
 type Box struct {
-	Id BoxId
+	Id   BoxId
+	Code string
 }
 
 type Boxes []Box
