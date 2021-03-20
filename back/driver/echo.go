@@ -35,8 +35,8 @@ func NewEchoServer() *echo.Echo {
 			fmt.Println(fmt.Sprintf("%#v", c.Request().Header))
 
 			userId := ""
-			if len(c.Request().Header["x-amzn-oidc-identity"]) > 0 {
-				userId = c.Request().Header["x-amzn-oidc-identity"][0]
+			if len(c.Request().Header["X-Amzn-Oidc-Identity"]) > 0 {
+				userId = c.Request().Header["X-Amzn-Oidc-Identity"][0]
 			}
 
 			fmt.Printf("User ID: %v\n", userId)
