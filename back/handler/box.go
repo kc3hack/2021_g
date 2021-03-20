@@ -3,10 +3,10 @@ package handler
 import (
 	"net/http"
 
+	"github.com/kc3hack/2021_g/driver"
 	"github.com/kc3hack/2021_g/entity"
 	"github.com/kc3hack/2021_g/log"
 	"github.com/kc3hack/2021_g/openapi"
-	"github.com/kc3hack/2021_g/driver"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,10 +18,10 @@ func (h Handler) GetBoxes(ctx echo.Context) error {
 	cctx, ok := ctx.(*driver.CostomContext)
 
 	if !ok {
-		// TODO
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 
-	userId := cctx.UserId //TODO: トークンから取得
+	userId := cctx.UserId
 	boxes, err := h.BoxUC.GetBoxes(entity.UserId(userId))
 	if err != nil {
 		logger.Error(err)
