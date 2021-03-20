@@ -3,7 +3,7 @@ info:
   title: kc3_2021_g
   version: 0.0.0
 servers:
-  - url: https://1f2e643e-b69a-43b3-8731-606a8eedde30.mock.pstmn.io/
+  - url: https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/
     description: モックサーバー
   - url: http://localhost:8080
     description: ローカル環境
