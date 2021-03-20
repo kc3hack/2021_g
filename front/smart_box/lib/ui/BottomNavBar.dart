@@ -92,7 +92,7 @@ class MyCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = new Paint()
-      ..color = Colors.black45.withAlpha(50)
+      ..color = Colors.black12.withAlpha(40)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 5;
 
