@@ -1,17 +1,20 @@
 ///
 /// QRおよびバーコードを読み込む関数
 ///
-
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'dart:async';
+
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 /// QR・バーコードをスキャンし文字列として返す
 /// [scanMode]に対応したコードを読み込む
 /// スキャン中の線の色は[hexString]で、スキャンするか、[cancel]を押すと終了。
 /// [isFlushButtonVisible]が正ならフラッシュボタンを表示
 ///
-Future<String> scanBarcode(String hexString,ScanMode scanMode,{String cancel = "Cancel",bool isFlushButtonVisible = true}) async {
+Future<String> scanBarcode(ScanMode scanMode,
+    {String hexString = "#ff6666",
+    String cancel = "Cancel",
+    bool isFlushButtonVisible = true}) async {
   String barcodeScanRes;
   try {
     barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(

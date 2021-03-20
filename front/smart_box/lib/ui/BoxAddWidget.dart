@@ -88,6 +88,12 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: TextFormField(
                                   maxLines: 1,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return "名前を入力してください";
+                                    }
+                                    return null;
+                                  },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -102,6 +108,10 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                                   },
                                 )),
                           ),
+
+                          ///
+                          /// メモ
+                          ///
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -117,7 +127,7 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                             child: Container(
                                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: TextFormField(
-                                  maxLines: 5,
+                                  maxLines: 4,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -151,15 +161,17 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                                 ///
                                 ///保存処理
                                 ///
-                                this.formKey.currentState.save();
-                                print(this._boxName);
-                                print(this._description);
-                                await createBox(
-                                    Box(1, this._boxName,
-                                        description: this._description,
-                                        base64Image: this._base64Image),
-                                    "token");
-                                widget.widgetHolderState.onWillPopHandler();
+                                if (this.formKey.currentState.validate()) {
+                                  this.formKey.currentState.save();
+                                  print(this._boxName);
+                                  print(this._description);
+                                  print(await createBox(
+                                      Box(1, this._boxName,
+                                          description: this._description,
+                                          base64Image: this._base64Image),
+                                      widget.widgetHolderState.getIdToken()));
+                                  widget.widgetHolderState.onWillPopHandler();
+                                }
                               },
                             )),
                         Container(

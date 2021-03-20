@@ -58,8 +58,9 @@ Future<Box> createBox(Box aBox, String token) async {
   String body = json.encode({
     "name": aBox.boxName,
     "icon": aBox.base64Image,
-    "note": aBox.description
+    "note": aBox.description,
   });
+  print(body);
   String jsonString =
       await _request("boxes", ClientRequest.POST, token, body: body);
   return jsonToBox(jsonString);

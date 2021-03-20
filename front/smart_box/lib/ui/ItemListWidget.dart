@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
+import 'package:smart_box/ui/ItemAddWidget.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
 import 'package:smart_box/ui/WidgetHolder.dart';
 
@@ -78,7 +79,8 @@ class _ItemListWidgetState extends State<ItemListWidget> {
               size: 35,
               color: Colors.white,
             ),
-            onPressed: () => print("item add"),
+            onPressed: () => widget.widgetHolderState
+                .add(ItemAddWidget(this.aBox, widget.widgetHolderState)),
             backgroundColor: Color.fromARGB(255, 238, 152, 157),
           ),
         ),

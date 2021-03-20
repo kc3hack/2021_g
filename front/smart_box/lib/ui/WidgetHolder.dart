@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smart_box/ui/BoxListWidget.dart';
 
@@ -10,6 +11,12 @@ class WidgetHolder extends StatefulWidget {
 
 class WidgetHolderState extends State<WidgetHolder> {
   Queue<Object> routeStack = Queue();
+  CognitoUserSession cognitoUserSession;
+
+  String getIdToken() {
+    return "token";
+    //return cognitoUserSession.getIdToken().getJwtToken();
+  }
 
   void add(Object aWidget) {
     setState(() {
