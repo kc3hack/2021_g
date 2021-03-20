@@ -16,11 +16,9 @@ class ItemWidget extends StatelessWidget {
     print(this.anItem.itemName);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _makeItemWidget() {
     Widget image = this.anItem.getImage();
-    if (image == null) image = Container();
-
+    if (image == null) image = Image.asset("images/dummy.png");
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -45,5 +43,10 @@ class ItemWidget extends StatelessWidget {
                     )),
               ],
             )));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return this._makeItemWidget();
   }
 }

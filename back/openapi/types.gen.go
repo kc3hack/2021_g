@@ -17,14 +17,18 @@ type Base64 []byte
 // Box defines model for Box.
 type Box struct {
 	CreatedAt Datetime `json:"created_at"`
-	Id        Id       `json:"id"`
+	CreatedBy *User    `json:"created_by,omitempty"`
 
 	// base64 encoded characters
-	Image     Base64   `json:"image"`
+	Icon      Base64   `json:"icon"`
+	Id        Id       `json:"id"`
 	ItemCount Count    `json:"item_count"`
-	Memo      Memo     `json:"memo"`
 	Name      BoxName  `json:"name"`
+	Note      Note     `json:"note"`
+	Readers   *[]User  `json:"readers,omitempty"`
 	UpdatedAt Datetime `json:"updated_at"`
+	UpdatedBy *User    `json:"updated_by,omitempty"`
+	Writers   *[]User  `json:"writers,omitempty"`
 }
 
 // BoxName defines model for BoxName.
@@ -42,20 +46,22 @@ type Id uint64
 // Item defines model for Item.
 type Item struct {
 	CreatedAt Datetime `json:"created_at"`
-	Id        Id       `json:"id"`
+	CreatedBy *User    `json:"created_by,omitempty"`
 
 	// base64 encoded characters
-	Image     Base64   `json:"image"`
-	Memo      Memo     `json:"memo"`
+	Icon      Base64   `json:"icon"`
+	Id        Id       `json:"id"`
 	Name      ItemName `json:"name"`
+	Note      Note     `json:"note"`
 	UpdatedAt Datetime `json:"updated_at"`
+	UpdatedBy *User    `json:"updated_by,omitempty"`
 }
 
 // ItemName defines model for ItemName.
 type ItemName string
 
-// Memo defines model for Memo.
-type Memo string
+// Note defines model for Note.
+type Note string
 
 // QRPaperSize defines model for QRPaperSize.
 type QRPaperSize string
@@ -75,31 +81,36 @@ const (
 	QRPlacementType_type2 QRPlacementType = "type2"
 )
 
+// User defines model for User.
+type User struct {
+	Name *string `json:"name,omitempty"`
+}
+
 // PostBoxesJSONBody defines parameters for PostBoxes.
 type PostBoxesJSONBody struct {
 
 	// base64 encoded characters
-	Image *Base64 `json:"image,omitempty"`
-	Memo  *Memo   `json:"memo,omitempty"`
-	Name  BoxName `json:"name"`
+	Icon *Base64 `json:"icon,omitempty"`
+	Name BoxName `json:"name"`
+	Note *Note   `json:"note,omitempty"`
 }
 
 // PutBoxesBoxIdJSONBody defines parameters for PutBoxesBoxId.
 type PutBoxesBoxIdJSONBody struct {
 
 	// base64 encoded characters
-	Image *Base64  `json:"image,omitempty"`
-	Memo  *Memo    `json:"memo,omitempty"`
-	Name  *BoxName `json:"name,omitempty"`
+	Icon *Base64  `json:"icon,omitempty"`
+	Name *BoxName `json:"name,omitempty"`
+	Note *Note    `json:"note,omitempty"`
 }
 
 // PostBoxesBoxIdItemsJSONBody defines parameters for PostBoxesBoxIdItems.
 type PostBoxesBoxIdItemsJSONBody struct {
 
 	// base64 encoded characters
-	Image *Base64  `json:"image,omitempty"`
-	Memo  *Memo    `json:"memo,omitempty"`
-	Name  ItemName `json:"name"`
+	Icon *Base64  `json:"icon,omitempty"`
+	Name ItemName `json:"name"`
+	Note *Note    `json:"note,omitempty"`
 }
 
 // GetBoxesBoxIdQrParams defines parameters for GetBoxesBoxIdQr.
@@ -113,8 +124,8 @@ type PutItemsItemIdJSONBody struct {
 
 	// base64 encoded characters
 	Image *Base64   `json:"image,omitempty"`
-	Memo  *Memo     `json:"memo,omitempty"`
 	Name  *ItemName `json:"name,omitempty"`
+	Note  *Note     `json:"note,omitempty"`
 }
 
 // PostBoxesJSONRequestBody defines body for PostBoxes for application/json ContentType.

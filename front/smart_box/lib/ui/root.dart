@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_box/ui/BoxListWidget.dart';
 
-import 'package:smart_box/ui/BottomNavBar.dart';
+import 'BottomNavBar.dart';
 import 'Camera.dart';
 
 class RootWidget extends StatefulWidget {
@@ -15,14 +15,14 @@ class RootWidget extends StatefulWidget {
 class _RootWidgetState extends State<RootWidget> {
   static int selectedIndex = 0;
 
-  var _routes = [
+  List<Widget> _routes = [
     BoxListWidget(),
     Camera(),
     Camera(),
   ];
 
   // まだ使っていない _selectedIndexを共有する
-  setBottomBarIndex(index) {
+  void setBottomBarIndex(index) {
     setState(() {
       selectedIndex = index;
     });
@@ -34,12 +34,13 @@ class _RootWidgetState extends State<RootWidget> {
       // body: _routes.elementAt(selectedIndex),
       // bottomNavigationBar: BottomNavBar(selectedIndex: selectedIndex,setBottomBarIndex: setBottomBarIndex,),
       body: Column(children: [
-        Flexible(child: _routes.elementAt(selectedIndex)),
-        // Container(color: Colors.black,),
-        Flexible(child: BottomNavBar(
-          selectedIndex: selectedIndex, setBottomBarIndex: setBottomBarIndex,
-        ),
-        ),
+        Expanded(flex: 6, child: _routes.elementAt(selectedIndex)),
+        Expanded(
+            flex: 1,
+            child: BottomNavBar(
+              selectedIndex: selectedIndex,
+              setBottomBarIndex: setBottomBarIndex,
+            )),
       ]),
     );
   }
