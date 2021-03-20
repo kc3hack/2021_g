@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
+import 'package:smart_box/ui/BoxAddWidget.dart';
 import 'package:smart_box/ui/ItemListWidget.dart';
 import 'package:smart_box/ui/WidgetHolder.dart';
 
@@ -12,7 +13,7 @@ import 'package:smart_box/ui/WidgetHolder.dart';
 /// これによりbottomNavigationを表示したまま遷移している
 ///
 class BoxListWidget extends StatefulWidget {
-  WidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   BoxListWidget(this.widgetHolderState);
   @override
   _BoxListWidgetState createState() => _BoxListWidgetState();
@@ -124,7 +125,8 @@ class _BoxListWidgetState extends State<BoxListWidget> {
               size: 35,
               color: Colors.white,
             ),
-            onPressed: () => print("pushed"),
+            onPressed: () => widget.widgetHolderState
+                .add(BoxAddWidget(widget.widgetHolderState)),
             backgroundColor: Color.fromARGB(255, 238, 152, 157),
           ),
         ),
