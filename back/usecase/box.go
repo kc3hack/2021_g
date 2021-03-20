@@ -7,7 +7,7 @@ import (
 
 type boxRepository interface {
 	FindALLByUserId(userId entity.UserId) (*entity.Boxes, error)
-	FindCodeById(id entity.BoxId) (*entity.Code, error)
+	FindCodeById(id entity.BoxId) (entity.Code, error)
 	Store(e *entity.Box) (*entity.Box, error)
 	Update(e *entity.Box) (*entity.Box, error)
 	DeleteById(id entity.BoxId) error
@@ -32,16 +32,12 @@ func (b *Box) GetBoxes(userId entity.UserId) (*entity.Boxes, error) {
 	return boxes, err
 }
 
-func (b *Box) GetBoxesBoxIdQr(id entity.BoxId) ([]byte, error) {
-	codeByte, err := b.boxRepo.FindCodeById(id)
+func (b *Box) GetBoxesBoxIdQr(id entity.BoxId) (string, error) {
+	base64Qr, err := b.boxRepo.FindCodeById(id)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	codeBase64, err := []byte(*codeByte), nil //TODO: codeByteをQRコードにしbase64に変換
-	if err != nil {
-		return nil, err
-	}
-	return codeBase64, nil
+	return string(base64Qr), nil
 }
 
 func (b *Box) PostBoxes(box *entity.Box) (*entity.Box, error) {
@@ -53,6 +49,9 @@ func (b *Box) PostBoxes(box *entity.Box) (*entity.Box, error) {
 	base64Qr := framework.ImageBase64Encode(filePath)
 	box.Code = base64Qr
 	box, err = b.boxRepo.Update(box)
+	if err != nil {
+		return nil, err
+	}
 	return box, nil
 }
 

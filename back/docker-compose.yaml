@@ -28,7 +28,7 @@ services:
     restart: always
     tty: true
     ports:
-      - '8080:8080'
+      - '80:8080'
     environment:
       PORT: 8080
       DB_USER: user # = MYSQL_USER

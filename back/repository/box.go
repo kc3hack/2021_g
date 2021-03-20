@@ -19,8 +19,8 @@ func (b *Box) FindALLByUserId(userId entity.UserId) (*entity.Boxes, error) {
 	return &entity.Boxes{}, nil
 }
 
-func (b *Box) FindCodeById(id entity.BoxId) (*entity.Code, error) {
-	return &entity.Code{}, nil
+func (b *Box) FindCodeById(id entity.BoxId) (entity.Code, error) {
+	return entity.Code{}, nil
 }
 
 func (b *Box) Store(e *entity.Box) (*entity.Box, error) {
