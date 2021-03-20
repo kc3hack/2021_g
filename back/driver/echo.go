@@ -32,7 +32,10 @@ func NewEchoServer() *echo.Echo {
 	// userId取得
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc{
 		return func(c echo.Context) error {
-			userId := c.Response().Header().Get("x-amzn-oidc-identity")
+			userId := ""
+			if len(c.Request().Header["x-amzn-oidc-identity"]) > 0 {
+				userId = c.Request().Header["x-amzn-oidc-identity"][0]
+			}
 
 			fmt.Printf("User ID: %v\n", userId)
 
