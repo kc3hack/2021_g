@@ -4,9 +4,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
+import 'package:smart_box/ui/BoxWidgetHolder.dart';
 import 'package:smart_box/ui/ItemAddWidget.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
-import 'package:smart_box/ui/BoxWidgetHolder.dart';
 
 ///
 /// アイテム一覧を表示するWidget
@@ -35,6 +35,39 @@ class _ItemListWidgetState extends State<ItemListWidget> {
         this.items = items;
       });
     });
+  }
+
+  Future<void> _itemLong(int index) async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(this.items[index].itemName + "を削除しますか？"),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              child: Text("キャンセル"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            CupertinoDialogAction(
+              child: Text("削除"),
+              isDestructiveAction: true,
+              onPressed: () async {
+                Navigator.pop(context);
+                deleteItem(this.items[index].id,
+                        widget.widgetHolderState.getIdToken())
+                    .then((value) {
+                  if (value) {
+                    setState(() {
+                      this.items.removeAt(index);
+                    });
+                  }
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   ///
@@ -94,7 +127,9 @@ class _ItemListWidgetState extends State<ItemListWidget> {
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) return this._makeBoxDescription();
                 if (index == this.items.length + 1) return Container();
-                return ItemWidget(this.items[index - 1]);
+                return GestureDetector(
+                    onLongPress: () => this._itemLong(index - 1),
+                    child: ItemWidget(this.items[index - 1]));
               },
               staggeredTileBuilder: (int index) => StaggeredTile.extent(
                   (index == 0) ? 100 : 1, (index == 0) ? 150 : 170),
