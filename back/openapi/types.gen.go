@@ -17,7 +17,7 @@ type Base64 []byte
 // Box defines model for Box.
 type Box struct {
 	CreatedAt Datetime `json:"created_at"`
-	CreatedBy *User    `json:"created_by,omitempty"`
+	CreatedBy User     `json:"created_by"`
 
 	// base64 encoded characters
 	Icon      Base64   `json:"icon"`
@@ -25,10 +25,10 @@ type Box struct {
 	ItemCount Count    `json:"item_count"`
 	Name      BoxName  `json:"name"`
 	Note      Note     `json:"note"`
-	Readers   *[]User  `json:"readers,omitempty"`
+	Readers   []User   `json:"readers"`
 	UpdatedAt Datetime `json:"updated_at"`
-	UpdatedBy *User    `json:"updated_by,omitempty"`
-	Writers   *[]User  `json:"writers,omitempty"`
+	UpdatedBy User     `json:"updated_by"`
+	Writers   []User   `json:"writers"`
 }
 
 // BoxName defines model for BoxName.
@@ -46,7 +46,7 @@ type Id uint64
 // Item defines model for Item.
 type Item struct {
 	CreatedAt Datetime `json:"created_at"`
-	CreatedBy *User    `json:"created_by,omitempty"`
+	CreatedBy User     `json:"created_by"`
 
 	// base64 encoded characters
 	Icon      Base64   `json:"icon"`
@@ -54,7 +54,7 @@ type Item struct {
 	Name      ItemName `json:"name"`
 	Note      Note     `json:"note"`
 	UpdatedAt Datetime `json:"updated_at"`
-	UpdatedBy *User    `json:"updated_by,omitempty"`
+	UpdatedBy User     `json:"updated_by"`
 }
 
 // ItemName defines model for ItemName.
@@ -83,7 +83,7 @@ const (
 
 // User defines model for User.
 type User struct {
-	Name *string `json:"name,omitempty"`
+	Name string `json:"name"`
 }
 
 // PostBoxesJSONBody defines parameters for PostBoxes.
@@ -123,9 +123,9 @@ type GetBoxesBoxIdQrParams struct {
 type PutItemsItemIdJSONBody struct {
 
 	// base64 encoded characters
-	Image *Base64   `json:"image,omitempty"`
-	Name  *ItemName `json:"name,omitempty"`
-	Note  *Note     `json:"note,omitempty"`
+	Icon *Base64   `json:"icon,omitempty"`
+	Name *ItemName `json:"name,omitempty"`
+	Note *Note     `json:"note,omitempty"`
 }
 
 // PostBoxesJSONRequestBody defines body for PostBoxes for application/json ContentType.
@@ -139,4 +139,3 @@ type PostBoxesBoxIdItemsJSONRequestBody PostBoxesBoxIdItemsJSONBody
 
 // PutItemsItemIdJSONRequestBody defines body for PutItemsItemId for application/json ContentType.
 type PutItemsItemIdJSONRequestBody PutItemsItemIdJSONBody
-

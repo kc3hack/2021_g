@@ -16,8 +16,8 @@ services:
     security_opt:
       - seccomp:unconfined
     volumes:
-      - ./database/data:/var/lib/mysql
-      - ./database/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
       - backend_server
 

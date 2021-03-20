@@ -1,7 +1,6 @@
 package driver
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -12,7 +11,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func newDBConn() (*gorm.DB, error) {
+func NewDBConn() *gorm.DB {
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
 		logger.Config{
@@ -22,20 +21,20 @@ func newDBConn() (*gorm.DB, error) {
 		},
 	)
 
-	db, err := gorm.Open(mysql.Open(config.DSN()), &gorm.Config{
+	dbConn, err := gorm.Open(mysql.Open(config.DSN()), &gorm.Config{
 		Logger: newLogger,
 	})
 	if err != nil {
 		panic("failed to connect database")
 	}
 
-	sqlDB, _ := db.DB()
+	sqlDB, _ := dbConn.DB()
 	sqlDB.SetMaxIdleConns(100)
 	sqlDB.SetMaxOpenConns(100)
 
 	if err := sqlDB.Ping(); err != nil {
-		return nil, fmt.Errorf("failed to ping: %w", err)
+		panic("failed to ping")
 	}
 
-	return db, nil
+	return dbConn
 }
