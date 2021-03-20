@@ -1,7 +1,7 @@
-database/data/*
-
-*.env
+mysql/data/*
 
 *.log
+
+*.env
 
 main
