@@ -28,5 +28,30 @@ func NewEchoServer() *echo.Echo {
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
 	e.Use(middleware.BodyDump(bodyDumpHandler))
+
+	// userId取得
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc{
+		return func(c echo.Context) error {
+			userId := ""
+			if len(c.Request().Header["X-Amzn-Oidc-Identity"]) > 0 {
+				userId = c.Request().Header["X-Amzn-Oidc-Identity"][0]
+			}
+
+			fmt.Printf("User ID: %v\n", userId)
+
+			cctx := &CostomContext{
+				Context: c,
+				UserId: userId,
+			}
+
+			return next(cctx)
+		}
+	})
+
 	return e
+}
+
+type CostomContext struct {
+	echo.Context
+	UserId string
 }
