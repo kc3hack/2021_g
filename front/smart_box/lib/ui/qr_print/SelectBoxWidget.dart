@@ -46,7 +46,7 @@ class _SelectBoxWidgetState extends State<SelectBoxWidget> {
             style: TextStyle(fontSize: 16),
           ),
           leading: (this.selected == index)
-              ? Icon(Icons.check_box_outlined)
+              ? Icon(Icons.check_box_rounded)
               : Icon(Icons.check_box_outline_blank),
           onTap: () {
             _boxTapHandler(index, box);
@@ -92,8 +92,8 @@ class _SelectBoxWidgetState extends State<SelectBoxWidget> {
                   if (this.selected == -1) {
                     return;
                   }
-                  widget.widgetHolderState
-                      .add(SelectQrWidget(widget.widgetHolderState));
+                  widget.widgetHolderState.add(SelectQrWidget(
+                      widget.widgetHolderState, this.boxList[this.selected]));
                 },
               ),
             ),

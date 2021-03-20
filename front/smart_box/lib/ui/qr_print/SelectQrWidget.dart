@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/ui/qr_print/QrResultWidget.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 
 enum PrintType { BIG, MIDDLE, SMALL, STRIP }
 
 class SelectQrWidget extends StatefulWidget {
   final QrWidgetHolderState widgetHolderState;
-  SelectQrWidget(this.widgetHolderState);
+  final Box aBox;
+  SelectQrWidget(this.widgetHolderState, this.aBox);
   @override
   _SelectQrWidgetState createState() => _SelectQrWidgetState();
 }
@@ -20,6 +23,7 @@ class _SelectQrWidgetState extends State<SelectQrWidget> {
   Widget makeQrTile(Image image, PrintType type) {
     String size;
     String number;
+    final Size monitorSize = MediaQuery.of(context).size;
     switch (type) {
       case PrintType.BIG:
         size = "大サイズ";
@@ -35,7 +39,7 @@ class _SelectQrWidgetState extends State<SelectQrWidget> {
         break;
       case PrintType.STRIP:
         size = "短冊サイズ";
-        number = "短冊型×4";
+        number = "短冊型×4     ";
         break;
     }
     return GestureDetector(
@@ -53,13 +57,16 @@ class _SelectQrWidgetState extends State<SelectQrWidget> {
               onChanged: _handleRadio,
             ),
             Container(
-              width: 150,
-              height: 100,
+              width: monitorSize.width / 3,
+              height: (monitorSize.height + monitorSize.width) / 10,
               child: image,
             ),
-            Column(
-              children: [Text(size), Text(number)],
-            )
+            Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text(size), Text(number)],
+                ))
           ]),
         ));
   }
@@ -98,7 +105,8 @@ class _SelectQrWidgetState extends State<SelectQrWidget> {
                     if (this._type == null) {
                       return;
                     }
-                    widget.widgetHolderState.add(Container());
+                    widget.widgetHolderState.add(QrResultWidget(
+                        widget.widgetHolderState, widget.aBox, _type));
                   },
                 ),
               ),
@@ -138,14 +146,12 @@ class _SelectQrWidgetState extends State<SelectQrWidget> {
               Flexible(
                   child: ListView(
                 children: [
+                  this.makeQrTile(Image.asset("images/L.png"), PrintType.BIG),
                   this.makeQrTile(
-                      Image.asset("images/dummy.png"), PrintType.BIG),
+                      Image.asset("images/M.png"), PrintType.MIDDLE),
+                  this.makeQrTile(Image.asset("images/S.png"), PrintType.SMALL),
                   this.makeQrTile(
-                      Image.asset("images/dummy.png"), PrintType.MIDDLE),
-                  this.makeQrTile(
-                      Image.asset("images/dummy.png"), PrintType.SMALL),
-                  this.makeQrTile(
-                      Image.asset("images/dummy.png"), PrintType.STRIP),
+                      Image.asset("images/Strip.png"), PrintType.STRIP),
                   Container(
                     height: 100,
                   ),
