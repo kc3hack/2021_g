@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_box/ui/BoxListWidget.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 import 'BottomNavBar.dart';
 import 'Camera.dart';
@@ -16,7 +16,7 @@ class _RootWidgetState extends State<RootWidget> {
   static int selectedIndex = 0;
 
   List<Widget> _routes = [
-    BoxListWidget(),
+    WidgetHolder(),
     Camera(),
     Camera(),
   ];
