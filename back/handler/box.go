@@ -78,8 +78,12 @@ func (h Handler) PostBoxes(ctx echo.Context) error {
 
 	reqBox := &entity.Box{
 		Name: string(req.Name),
-		Note: string(*req.Note),
-		Icon: entity.Icon(*req.Icon),
+	}
+	if req.Note != nil {
+		reqBox.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqBox.Icon = entity.Icon(*req.Icon)
 	}
 
 	resBox, err := h.BoxUC.PostBoxes(reqBox)
@@ -127,10 +131,16 @@ func (h Handler) PutBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	reqBox := &entity.Box{
-		ID:   entity.BoxId(boxId),
-		Name: string(*req.Name),
-		Icon: entity.Icon(*req.Icon),
-		Note: string(*req.Note),
+		ID: entity.BoxId(boxId),
+	}
+	if req.Name != nil {
+		reqBox.Name = string(*req.Name)
+	}
+	if req.Note != nil {
+		reqBox.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqBox.Icon = entity.Icon(*req.Icon)
 	}
 
 	resBox, err := h.BoxUC.PostBoxes(reqBox)
