@@ -32,8 +32,6 @@ func NewEchoServer() *echo.Echo {
 	// userId取得
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc{
 		return func(c echo.Context) error {
-			fmt.Println(fmt.Sprintf("%#v", c.Request().Header))
-
 			userId := ""
 			if len(c.Request().Header["X-Amzn-Oidc-Identity"]) > 0 {
 				userId = c.Request().Header["X-Amzn-Oidc-Identity"][0]
