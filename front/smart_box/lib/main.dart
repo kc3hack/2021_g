@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smart_box/ui/root.dart';
+import 'package:smart_box/ui/RootWidget.dart';
 
 void main() {
   runApp(MyApp());
