@@ -2,14 +2,14 @@ import 'dart:collection';
 
 import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:smart_box/ui/BoxListWidget.dart';
+import 'package:smart_box/ui/qr_print/SelectBoxWidget.dart';
 
-class WidgetHolder extends StatefulWidget {
+class QrWidgetHolder extends StatefulWidget {
   @override
-  WidgetHolderState createState() => WidgetHolderState();
+  QrWidgetHolderState createState() => QrWidgetHolderState();
 }
 
-class WidgetHolderState extends State<WidgetHolder> {
+class QrWidgetHolderState extends State<QrWidgetHolder> {
   Queue<Object> routeStack = Queue();
   CognitoUserSession cognitoUserSession;
 
@@ -54,7 +54,7 @@ class WidgetHolderState extends State<WidgetHolder> {
   void initState() {
     super.initState();
     setState(() {
-      this.routeStack.add(BoxListWidget(this));
+      this.routeStack.add(SelectBoxWidget(this));
     });
   }
 
