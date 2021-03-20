@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/ItemListWidget.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 ///
 /// ボックス一覧画面のWidget
@@ -11,13 +12,14 @@ import 'package:smart_box/ui/ItemListWidget.dart';
 /// これによりbottomNavigationを表示したまま遷移している
 ///
 class BoxListWidget extends StatefulWidget {
+  WidgetHolderState widgetHolderState;
+  BoxListWidget(this.widgetHolderState);
   @override
   _BoxListWidgetState createState() => _BoxListWidgetState();
 }
 
 class _BoxListWidgetState extends State<BoxListWidget> {
   List<Box> boxList = [];
-  bool _isBoxSelected = false;
   Box _selectedBox;
 
   ///
@@ -46,52 +48,8 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   /// リストのボックスをタップした時の処理
   ///
   void _boxTapHandler(Box box) {
-    setState(() {
-      this._isBoxSelected = true;
-      this._selectedBox = box;
-    });
-  }
-
-  ///
-  /// アイテム一覧で戻るボタンが押された時の処理
-  ///
-  Future<bool> _onWillPopHandler() async {
-    setState(() {
-      this._isBoxSelected = false;
-    });
-    return false;
-  }
-
-  ///
-  /// アイテム一覧を表示するためのWidgetを作成する
-  ///
-  WillPopScope _makeItemList() {
-    return WillPopScope(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("アイテム一覧"),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: _onWillPopHandler,
-            ),
-            actions: [
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 40,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    onPressed: () {
-                      print("search button pushed");
-                    },
-                  ))
-            ],
-          ),
-          body: ItemListWidget(this._selectedBox),
-        ),
-        onWillPop: this._onWillPopHandler);
+    widget.widgetHolderState.add(ItemListWidget(box, widget.widgetHolderState));
+    //this._selectedBox = box;
   }
 
   ///
@@ -204,6 +162,6 @@ class _BoxListWidgetState extends State<BoxListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return (this._isBoxSelected) ? this._makeItemList() : this._makeBoxList();
+    return this._makeBoxList();
   }
 }
