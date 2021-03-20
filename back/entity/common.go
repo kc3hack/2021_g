@@ -1,3 +1,3 @@
 package entity
 
-type Icon []byte
+type Icon string
