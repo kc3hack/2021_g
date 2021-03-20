@@ -21,6 +21,21 @@ Image base64ToImage(String aBase64String) {
 }
 
 ///
+/// base64文字列からImageへ変換する
+///
+/// 例外が発生した場合はnull
+///
+Uint8List base64ToUnit8List(String aBase64String) {
+  Uint8List bytes;
+  try {
+    bytes = base64.decode(aBase64String);
+  } catch (exception) {
+    print(exception);
+  }
+  return bytes;
+}
+
+///
 /// 画像からbase64文字列に変換する
 ///
 /// 例外発生時は空文字列
