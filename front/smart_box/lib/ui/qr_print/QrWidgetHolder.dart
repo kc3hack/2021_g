@@ -16,10 +16,10 @@ class QrWidgetHolderState extends State<QrWidgetHolder> {
   CognitoUserSession cognitoUserSession;
 
   String getIdToken() {
-    //return "token";
-    print("--------------------------------------------------");
-    print(widget.cognitoUserSession.getIdToken().getJwtToken());
-    return widget.cognitoUserSession.getIdToken().getJwtToken();
+    return "token";
+    // print("--------------------------------------------------");
+    // print(widget.cognitoUserSession.getIdToken().getJwtToken());
+    // return widget.cognitoUserSession.getIdToken().getJwtToken();
   }
 
   void add(Object aWidget) {

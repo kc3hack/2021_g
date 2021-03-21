@@ -8,13 +8,14 @@ Item _mapToItem(Map<String, dynamic> itemMap) {
   String name = itemMap["name"];
   String description = itemMap["note"];
   String icon = itemMap["icon"];
-  DateTime createdAt = DateTime.parse(itemMap["created_at"]);
-  DateTime updatedAt = DateTime.parse(itemMap["updated_at"]);
-  return Item(id, name,
-      description: description,
-      base64Image: icon,
-      createdAt: createdAt,
-      updatedAt: updatedAt);
+  //DateTime createdAt = DateTime.parse(itemMap["created_at"]);
+  //DateTime updatedAt = DateTime.parse(itemMap["updated_at"]);
+  return Item(
+    id,
+    name,
+    description: description,
+    base64Image: icon,
+  );
 }
 
 Box _mapToBox(Map<String, dynamic> boxMap) {
@@ -22,13 +23,14 @@ Box _mapToBox(Map<String, dynamic> boxMap) {
   String name = boxMap["name"];
   String description = boxMap["note"];
   String icon = boxMap["icon"];
-  DateTime createdAt = DateTime.parse(boxMap["created_at"]);
-  DateTime updatedAt = DateTime.parse(boxMap["updated_at"]);
-  return Box(id, name,
-      description: description,
-      base64Image: icon,
-      createdAt: createdAt,
-      updatedAt: updatedAt);
+  //DateTime createdAt = DateTime.parse(boxMap["created_at"]);
+  //DateTime updatedAt = DateTime.parse(boxMap["updated_at"]);
+  return Box(
+    id,
+    name,
+    description: description,
+    base64Image: icon,
+  );
 }
 
 Item jsonToItem(String jsonString) {
