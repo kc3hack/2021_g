@@ -62,6 +62,10 @@ UI/UX
 - 段ボールの中身をこのアプリケーションでスキャンすることで可視化できるということをイメージしたデザイン
 - テーマカラーを基調とした配色
 
+その他
+- プロトタイプレビュー（https://xd.adobe.com/view/e91d22fa-4735-4945-ba6b-053c46f9f77a-bc4e/）
+- プレゼン資料レビュー（https://drive.google.com/file/d/1wPc10BsXp02PAGS-PYOGuN4_ChcSyI9D/view?usp=sharing）
+
 
 ## 使用技術
 
