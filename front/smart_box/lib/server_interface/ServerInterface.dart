@@ -34,6 +34,7 @@ Future<String> _request(String url, ClientRequest request, String token,
   };
   url = baseUrl + url;
   http.Response resp;
+  print(url);
   switch (request) {
     case ClientRequest.GET:
       resp = await http.get(url, headers: headers);
@@ -53,6 +54,7 @@ Future<String> _request(String url, ClientRequest request, String token,
     print(resp.body);
     throw Exception("status code: " + resp.statusCode.toString());
   }
+  print(resp.body);
   return resp.body;
 }
 
@@ -60,7 +62,7 @@ Future<String> _request(String url, ClientRequest request, String token,
 /// サーバからボックスのリストを取得する
 ///
 Future<List<Box>> getBoxes(String token) async {
-  String jsonString = await _request("boxes/", ClientRequest.GET, token);
+  String jsonString = await _request("boxes", ClientRequest.GET, token);
   print(jsonString);
   return jsonToBoxes(jsonString);
 }
@@ -76,7 +78,7 @@ Future<Box> createBox(Box aBox, String token) async {
   });
   print(body);
   String jsonString =
-      await _request("boxes/", ClientRequest.POST, token, body: body);
+      await _request("boxes", ClientRequest.POST, token, body: body);
   return jsonToBox(jsonString);
 }
 
