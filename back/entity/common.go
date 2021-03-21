@@ -1,3 +1,5 @@
 package entity
 
-type Icon []byte
+type Icon string
+
+type UserId string
