@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:smart_box/Base64Utility/Base64Utility.dart';
 import 'package:smart_box/baggage/box.dart';
-import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
+import "package:url_launcher/url_launcher.dart";
 
 class QrResultWidget extends StatefulWidget {
   final QrWidgetHolderState widgetHolderState;
@@ -56,9 +54,9 @@ class _QrResultWidgetState extends State<QrResultWidget> {
     }
 
     if (await Permission.storage.isGranted) {
-      String base64String =
-          await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
-      print(ImageGallerySaver.saveImage(base64ToUnit8List(base64String)));
+      // String base64String =
+      //     await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
+      // print(ImageGallerySaver.saveImage(base64ToUnit8List(base64String)));
     }
   }
 
@@ -157,11 +155,19 @@ class _QrResultWidgetState extends State<QrResultWidget> {
                             child: Text("公式LINEアカウントはこちら！"),
                             padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                           )),
-                          Container(
-                            width: 140,
-                            height: 50,
-                            color: Colors.greenAccent,
-                          )
+                          GestureDetector(
+                              onTap: () async {
+                                await canLaunch(
+                                        "https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fline.me%2Fen")
+                                    ? await launch(
+                                        "https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fline.me%2Fen")
+                                    : print("Can not launch");
+                              },
+                              child: Container(
+                                width: 140,
+                                height: 50,
+                                child: Image.asset("images/line.png"),
+                              ))
                         ],
                       ))
                 ],

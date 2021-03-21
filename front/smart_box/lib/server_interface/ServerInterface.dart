@@ -5,9 +5,9 @@ import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/json_utility/JsonUtility.dart';
 
-// final String baseUrl =
-//     "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
-final String baseUrl = "https://smartbox.yukiho.dev/";
+final String baseUrl =
+    "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
+//final String baseUrl = "https://smartbox.yukiho.dev/";
 
 enum ClientRequest { POST, PUT, GET, DELETE }
 
@@ -21,6 +21,8 @@ Future<String> _request(String url, ClientRequest request, String token,
     "Authorization": token,
   };
   url = baseUrl + url;
+  print(token);
+  print(url);
   http.Response resp;
   switch (request) {
     case ClientRequest.GET:
@@ -48,7 +50,7 @@ Future<String> _request(String url, ClientRequest request, String token,
 /// サーバからボックスのリストを取得する
 ///
 Future<List<Box>> getBoxes(String token) async {
-  String jsonString = await _request("/boxes", ClientRequest.GET, token);
+  String jsonString = await _request("boxes/", ClientRequest.GET, token);
   print(jsonString);
   return jsonToBoxes(jsonString);
 }
@@ -64,7 +66,7 @@ Future<Box> createBox(Box aBox, String token) async {
   });
   print(body);
   String jsonString =
-      await _request("boxes", ClientRequest.POST, token, body: body);
+      await _request("boxes/", ClientRequest.POST, token, body: body);
   return jsonToBox(jsonString);
 }
 
