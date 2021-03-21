@@ -17,7 +17,7 @@ func ImageBase64Encode(filePath string) string {
 
 	b64Enc := base64.StdEncoding.EncodeToString(data)
 
-	os.Remove(filePath)
+	// os.Remove(filePath)
 
 	return b64Enc
 }
