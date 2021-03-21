@@ -52,3 +52,8 @@ List<Box> jsonToBoxes(String jsonString) {
   List<Box> boxes = jsonBoxes.map((boxMap) => (_mapToBox(boxMap))).toList();
   return boxes;
 }
+
+List<String> jsonToQrItem(String jsonString) {
+  Map<String, dynamic> qrItem = json.decode(jsonString);
+  return [qrItem["name"], qrItem["icon"]];
+}

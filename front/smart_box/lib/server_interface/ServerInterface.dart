@@ -5,8 +5,9 @@ import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/json_utility/JsonUtility.dart';
 
-final String baseUrl =
-    "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
+// final String baseUrl =
+//     "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
+final String baseUrl = "https://smartbox.yukiho.dev/";
 
 enum ClientRequest { POST, PUT, GET, DELETE }
 
@@ -48,6 +49,7 @@ Future<String> _request(String url, ClientRequest request, String token,
 ///
 Future<List<Box>> getBoxes(String token) async {
   String jsonString = await _request("/boxes", ClientRequest.GET, token);
+  print(jsonString);
   return jsonToBoxes(jsonString);
 }
 
@@ -143,4 +145,19 @@ Future<Item> updateItem(int itemId, Item item, String token) async {
 Future<bool> deleteItem(int itemId, String token) async {
   await _request("items/" + itemId.toString(), ClientRequest.DELETE, token);
   return true;
+}
+
+///
+/// JANコードを読み取る
+///
+Future<Item> readJan(String code, String token) async {
+  String jsonString =
+      await _request("products?jan=" + code, ClientRequest.GET, token);
+  List<String> qrItem = jsonToQrItem(jsonString);
+  if (qrItem[0] == null) {
+    return null;
+  }
+  Item item =
+      Item(-1, qrItem[0], base64Image: (qrItem[1] == null) ? "" : qrItem[1]);
+  return item;
 }

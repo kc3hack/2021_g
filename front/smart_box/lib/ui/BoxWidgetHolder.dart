@@ -15,8 +15,9 @@ class BoxWidgetHolderState extends State<BoxWidgetHolder> {
   Queue<Object> routeStack = Queue();
 
   String getIdToken() {
-    return "token";
-    //return widget.cognitoUserSession.getIdToken().getJwtToken();
+    //return "token";
+    print(widget.cognitoUserSession.getIdToken().getJwtToken());
+    return widget.cognitoUserSession.getIdToken().getJwtToken();
   }
 
   void add(Object aWidget) {

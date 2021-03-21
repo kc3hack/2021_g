@@ -2,9 +2,8 @@ import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+import 'package:smart_box/auth/Signup.dart';
 import 'package:smart_box/ui/RootWidget.dart';
-
-import 'Signup.dart';
 
 final userPool =
     new CognitoUserPool(DotEnv.env['POOL_ID'], DotEnv.env['CLIENT_ID']);
@@ -16,7 +15,9 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,7 @@ class Login extends StatelessWidget {
           )
         ],
       ),
-    );
+    )));
   }
 
   void _signIn(BuildContext context) async {
