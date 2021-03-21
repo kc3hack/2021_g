@@ -63,7 +63,7 @@ UI/UX
 - テーマカラーを基調とした配色
 
 その他
-- プロトタイプレビュー（https://xd.adobe.com/view/e91d22fa-4735-4945-ba6b-053c46f9f77a-bc4e/）
+- プロトタイプレビュー（https://xd.adobe.com/view/81203d16-2656-4cde-b740-0a7060b47641-d473/)
 - プレゼン資料レビュー（https://drive.google.com/file/d/1wPc10BsXp02PAGS-PYOGuN4_ChcSyI9D/view?usp=sharing）
 
 
