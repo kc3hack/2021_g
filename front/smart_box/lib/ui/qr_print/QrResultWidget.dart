@@ -1,8 +1,10 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smart_box/Base64Utility/Base64Utility.dart';
 import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
 import "package:url_launcher/url_launcher.dart";
@@ -55,18 +57,11 @@ class _QrResultWidgetState extends State<QrResultWidget> {
     }
 
     if (await Permission.storage.isGranted) {
-<<<<<<< Updated upstream
-      // String base64String =
-      //     await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
-      // print(ImageGallerySaver.saveImage(base64ToUnit8List(base64String)));
-=======
       String base64String =
           await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
-
       var temp = base64String.replaceAll("\"", "").replaceAll("\n", "");
       var temp2 = base64ToUnit8List(temp);
       await ImageGallerySaver.saveImage(temp2);
->>>>>>> Stashed changes
     }
   }
 
