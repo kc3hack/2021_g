@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:smart_box/ui/qr_print/SelectBoxWidget.dart';
 
 class QrWidgetHolder extends StatefulWidget {
+  CognitoUserSession cognitoUserSession;
+  QrWidgetHolder(this.cognitoUserSession);
   @override
   QrWidgetHolderState createState() => QrWidgetHolderState();
 }
@@ -14,8 +16,8 @@ class QrWidgetHolderState extends State<QrWidgetHolder> {
   CognitoUserSession cognitoUserSession;
 
   String getIdToken() {
-    return "token";
-    //return cognitoUserSession.getIdToken().getJwtToken();
+    //return "token";
+    return widget.cognitoUserSession.getIdToken().getJwtToken();
   }
 
   void add(Object aWidget) {

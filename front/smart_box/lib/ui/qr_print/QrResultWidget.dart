@@ -1,11 +1,10 @@
-import "dart:io";
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:smart_box/Camera/Camera.dart';
+import 'package:smart_box/Base64Utility/Base64Utility.dart';
 import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
 
@@ -57,8 +56,9 @@ class _QrResultWidgetState extends State<QrResultWidget> {
     }
 
     if (await Permission.storage.isGranted) {
-      print(ImageGallerySaver.saveImage(
-          File(await takePicture()).readAsBytesSync()));
+      String base64String =
+          await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
+      print(ImageGallerySaver.saveImage(base64ToUnit8List(base64String)));
     }
   }
 

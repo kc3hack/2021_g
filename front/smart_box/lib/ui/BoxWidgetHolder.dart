@@ -5,17 +5,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:smart_box/ui/BoxListWidget.dart';
 
 class BoxWidgetHolder extends StatefulWidget {
+  CognitoUserSession cognitoUserSession;
+  BoxWidgetHolder(this.cognitoUserSession);
   @override
   BoxWidgetHolderState createState() => BoxWidgetHolderState();
 }
 
 class BoxWidgetHolderState extends State<BoxWidgetHolder> {
   Queue<Object> routeStack = Queue();
-  CognitoUserSession cognitoUserSession;
 
   String getIdToken() {
-    return "token";
-    //return cognitoUserSession.getIdToken().getJwtToken();
+    //return "token";
+    print(widget.cognitoUserSession.getIdToken().getJwtToken());
+    return widget.cognitoUserSession.getIdToken().getJwtToken();
   }
 
   void add(Object aWidget) {
