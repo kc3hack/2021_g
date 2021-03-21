@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/kc3hack/2021_g/config"
-	"github.com/kc3hack/2021_g/entity"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -46,13 +45,13 @@ func NewDBConn() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	dbConn.AutoMigrate(
-		&entity.Box{},
-		&entity.Item{},
-		&entity.Product{},
-		&entity.Reader{},
-		&entity.Writer{},
-	)
+	// dbConn.AutoMigrate(
+	// 	&entity.Box{},
+	// 	&entity.Item{},
+	// 	&entity.Product{},
+	// 	&entity.Reader{},
+	// 	&entity.Writer{},
+	// )
 
 	return dbConn
 }

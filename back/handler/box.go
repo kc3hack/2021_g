@@ -143,7 +143,7 @@ func (h Handler) PutBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
 		reqBox.Icon = entity.Icon(*req.Icon)
 	}
 
-	resBox, err := h.BoxUC.PostBoxes(reqBox)
+	resBox, err := h.BoxUC.PutBoxesBoxId(reqBox)
 	if err != nil {
 		logger.Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError)

@@ -39,7 +39,7 @@ func (b *Box) Store(e *entity.Box) (*entity.Box, error) {
 }
 
 func (b *Box) Update(e *entity.Box) (*entity.Box, error) {
-	if err := b.db.Model(&entity.Box{}).Where("id = ?", e.ID).Updates(e).First(e).Error; err != nil {
+	if err := b.db.Updates(e).First(e).Error; err != nil {
 		return nil, err
 	}
 	return e, nil
