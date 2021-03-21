@@ -44,11 +44,14 @@ QRコードで収納管理をするアプリケーション　**SmartBox**
 
 ## 技術説明
 ### エンジニア
-フロントエンド
-- aaa
-
-バックエンド
-- aaa
+使用技術
+- Flutter
+- 言語：Go
+- ORM：GORM
+- API系：OpenAPI, Swagger（ドキュメント）, post man（モックサーバ）, OpenAPI-generator（コントローラ自動生成）
+- DB：MySQL
+- 認証：AWS cognito
+- サーバ構成：(Client) -> ALB <-> cognito -> EC2 -> RDS
 
 ### デザイナー
 UI/UX  
