@@ -16,21 +16,38 @@ func NewBox(db *gorm.DB) *Box {
 }
 
 func (b *Box) FindALLByUserId(userId entity.UserId) (*entity.Boxes, error) {
-	return &entity.Boxes{}, nil
+	boxes := &entity.Boxes{}
+	if err := b.db.Where("created_by = ?", userId).Find(boxes).Error; err != nil {
+		return nil, err
+	}
+	return boxes, nil
 }
 
 func (b *Box) FindCodeById(id entity.BoxId) (entity.Code, error) {
-	return entity.Code(""), nil
+	box := &entity.Box{}
+	if err := b.db.Select("code").Where("id = ?", id).Find(box).Error; err != nil {
+		return "", err
+	}
+	return box.Code, nil
 }
 
 func (b *Box) Store(e *entity.Box) (*entity.Box, error) {
-	return &entity.Box{}, nil
+	if err := b.db.Create(&e).First(&e).Error; err != nil {
+		return nil, err
+	}
+	return e, nil
 }
 
 func (b *Box) Update(e *entity.Box) (*entity.Box, error) {
-	return &entity.Box{}, nil
+	if err := b.db.Updates(e).First(e).Error; err != nil {
+		return nil, err
+	}
+	return e, nil
 }
 
 func (b *Box) DeleteById(id entity.BoxId) error {
+	if err := b.db.Where("id = ?", id).Delete(&entity.Box{}).Error; err != nil {
+		return err
+	}
 	return nil
 }

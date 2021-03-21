@@ -5,6 +5,7 @@ import (
 
 	"github.com/kc3hack/2021_g/driver"
 	"github.com/kc3hack/2021_g/entity"
+	"github.com/kc3hack/2021_g/framework"
 	"github.com/kc3hack/2021_g/log"
 	"github.com/kc3hack/2021_g/openapi"
 	"github.com/labstack/echo/v4"
@@ -29,9 +30,20 @@ func (h Handler) GetBoxes(ctx echo.Context) error {
 	}
 
 	res := []openapi.Box{}
-	for range *boxes {
+	for _, box := range *boxes {
 		res = append(res, openapi.Box{
-			//TODO
+			CreatedAt: openapi.Datetime(box.CreatedAt),
+			CreatedBy: openapi.User{
+				Name: box.CreatedBy,
+			},
+			Icon:      openapi.Base64(box.Icon),
+			Id:        openapi.Id(box.ID),
+			Name:      openapi.BoxName(box.Name),
+			Note:      openapi.Note(box.Note),
+			UpdatedAt: openapi.Datetime(box.UpdatedAt),
+			UpdatedBy: openapi.User{
+				Name: box.UpdatedBy,
+			},
 		})
 	}
 	return ctx.JSON(http.StatusOK, res)
@@ -65,7 +77,13 @@ func (h Handler) PostBoxes(ctx echo.Context) error {
 	}
 
 	reqBox := &entity.Box{
-		//TODO
+		Name: string(req.Name),
+	}
+	if req.Note != nil {
+		reqBox.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqBox.Icon = entity.Icon(*req.Icon)
 	}
 
 	resBox, err := h.BoxUC.PostBoxes(reqBox)
@@ -74,8 +92,28 @@ func (h Handler) PostBoxes(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 
+	filePath := framework.NewQRImg(resBox.ID)
+	qrBase64 := framework.ImageBase64Encode(filePath)
+	resBox.Code = entity.Code(qrBase64)
+	resBox, err = h.BoxUC.PutBoxesBoxId(resBox)
+	if err != nil {
+		logger.Error(err)
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+
 	res := openapi.Box{
-		Id: openapi.Id(resBox.ID),
+		CreatedAt: openapi.Datetime(resBox.CreatedAt),
+		CreatedBy: openapi.User{
+			Name: resBox.CreatedBy,
+		},
+		Icon:      openapi.Base64(resBox.Icon),
+		Id:        openapi.Id(resBox.ID),
+		Name:      openapi.BoxName(resBox.Name),
+		Note:      openapi.Note(resBox.Note),
+		UpdatedAt: openapi.Datetime(resBox.UpdatedAt),
+		UpdatedBy: openapi.User{
+			Name: resBox.UpdatedBy,
+		},
 	}
 
 	return ctx.JSON(http.StatusCreated, res)
@@ -93,18 +131,37 @@ func (h Handler) PutBoxesBoxId(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	reqBox := &entity.Box{
-		//TODO
+		ID: entity.BoxId(boxId),
+	}
+	if req.Name != nil {
+		reqBox.Name = string(*req.Name)
+	}
+	if req.Note != nil {
+		reqBox.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqBox.Icon = entity.Icon(*req.Icon)
 	}
 
-	resBox, err := h.BoxUC.PostBoxes(reqBox)
+	resBox, err := h.BoxUC.PutBoxesBoxId(reqBox)
 	if err != nil {
 		logger.Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 
 	res := openapi.Box{
-		Id: openapi.Id(resBox.ID),
-		// TODO
+		CreatedAt: openapi.Datetime(resBox.CreatedAt),
+		CreatedBy: openapi.User{
+			Name: resBox.CreatedBy,
+		},
+		Icon:      openapi.Base64(resBox.Icon),
+		Id:        openapi.Id(resBox.ID),
+		Name:      openapi.BoxName(resBox.Name),
+		Note:      openapi.Note(resBox.Note),
+		UpdatedAt: openapi.Datetime(resBox.UpdatedAt),
+		UpdatedBy: openapi.User{
+			Name: resBox.UpdatedBy,
+		},
 	}
 
 	return ctx.JSON(http.StatusCreated, res)

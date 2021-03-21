@@ -45,13 +45,13 @@ func NewDBConn() *gorm.DB {
 		panic("failed to connect database")
 	}
 
-	sqlDB, _ := dbConn.DB()
-	sqlDB.SetMaxIdleConns(100)
-	sqlDB.SetMaxOpenConns(100)
-
-	if err := sqlDB.Ping(); err != nil {
-		panic("failed to ping")
-	}
+	// dbConn.AutoMigrate(
+	// 	&entity.Box{},
+	// 	&entity.Item{},
+	// 	&entity.Product{},
+	// 	&entity.Reader{},
+	// 	&entity.Writer{},
+	// )
 
 	return dbConn
 }

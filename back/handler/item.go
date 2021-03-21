@@ -21,9 +21,20 @@ func (h Handler) GetBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	res := []openapi.Item{}
-	for range *items {
+	for _, item := range *items {
 		res = append(res, openapi.Item{
-			//TODO
+			CreatedAt: openapi.Datetime(item.CreatedAt),
+			CreatedBy: openapi.User{
+				Name: item.CreatedBy,
+			},
+			Icon:      openapi.Base64(item.Icon),
+			Id:        openapi.Id(item.ID),
+			Name:      openapi.ItemName(item.Name),
+			Note:      openapi.Note(item.Note),
+			UpdatedAt: openapi.Datetime(item.UpdatedAt),
+			UpdatedBy: openapi.User{
+				Name: item.UpdatedBy,
+			},
 		})
 	}
 	return ctx.JSON(http.StatusOK, res)
@@ -41,7 +52,14 @@ func (h Handler) PostBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	reqItem := &entity.Item{
-		//TODO
+		BoxID: entity.BoxId(boxId),
+		Name:  string(req.Name),
+	}
+	if req.Note != nil {
+		reqItem.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqItem.Icon = entity.Icon(*req.Icon)
 	}
 
 	resItem, err := h.ItemUC.PostBoxesBoxIdItems(reqItem)
@@ -51,8 +69,18 @@ func (h Handler) PostBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	res := openapi.Item{
-		Id: openapi.Id(resItem.ID),
-		// TODO
+		CreatedAt: openapi.Datetime(resItem.CreatedAt),
+		CreatedBy: openapi.User{
+			Name: resItem.CreatedBy,
+		},
+		Icon:      openapi.Base64(resItem.Icon),
+		Id:        openapi.Id(resItem.ID),
+		Name:      openapi.ItemName(resItem.Name),
+		Note:      openapi.Note(resItem.Note),
+		UpdatedAt: openapi.Datetime(resItem.UpdatedAt),
+		UpdatedBy: openapi.User{
+			Name: resItem.UpdatedBy,
+		},
 	}
 
 	return ctx.JSON(http.StatusCreated, res)
@@ -70,7 +98,16 @@ func (h Handler) PutItemsItemId(ctx echo.Context, itemId openapi.Id) error {
 	}
 
 	reqItem := &entity.Item{
-		//TODO
+		ID: entity.ItemId(itemId),
+	}
+	if req.Name != nil {
+		reqItem.Name = string(*req.Name)
+	}
+	if req.Note != nil {
+		reqItem.Note = string(*req.Note)
+	}
+	if req.Icon != nil {
+		reqItem.Icon = entity.Icon(*req.Icon)
 	}
 
 	resItem, err := h.ItemUC.PutItemsItemId(reqItem)
@@ -80,8 +117,18 @@ func (h Handler) PutItemsItemId(ctx echo.Context, itemId openapi.Id) error {
 	}
 
 	res := openapi.Item{
-		Id: openapi.Id(resItem.ID),
-		// TODO
+		CreatedAt: openapi.Datetime(resItem.CreatedAt),
+		CreatedBy: openapi.User{
+			Name: resItem.CreatedBy,
+		},
+		Icon:      openapi.Base64(resItem.Icon),
+		Id:        openapi.Id(resItem.ID),
+		Name:      openapi.ItemName(resItem.Name),
+		Note:      openapi.Note(resItem.Note),
+		UpdatedAt: openapi.Datetime(resItem.UpdatedAt),
+		UpdatedBy: openapi.User{
+			Name: resItem.UpdatedBy,
+		},
 	}
 
 	return ctx.JSON(http.StatusCreated, res)
