@@ -108,4 +108,4 @@ Flutter + AWS ?
 ## ドキュメント
 
 - API: https://kc3hack.github.io/2021_g/openapi_viewer/index.html
-- DB: https://github.com/kc3hack/2021_g/blob/main/back/database/README.md
+- DB: https://github.com/kc3hack/2021_g/wiki/ER
