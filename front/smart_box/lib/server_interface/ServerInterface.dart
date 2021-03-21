@@ -46,7 +46,7 @@ Future<String> _request(String url, ClientRequest request, String token,
       resp = await http.put(url, headers: headers, body: body);
       break;
     case ClientRequest.DELETE:
-      resp = await http.put(url, headers: headers);
+      resp = await http.delete(url, headers: headers);
       break;
   }
   if (resp.statusCode >= 300) {
