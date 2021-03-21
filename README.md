@@ -48,7 +48,7 @@ QRコードで収納管理をするアプリケーション　**SmartBox**
 - Flutter
 - 言語：Go
 - ORM：GORM
-- API系：OpenAPI, Swagger（ドキュメント）, post man（モックサーバ）, OpenAPI-generator（コントローラ自動生成）
+- API系：OpenAPI, Swagger（ドキュメント）, post man（モックサーバ）, OpenAPI-generator（コントローラ自動生成）, echo(goフレームワーク)
 - DB：MySQL
 - 認証：AWS cognito
 - サーバ構成：(Client) -> ALB <-> cognito -> EC2 -> RDS
