@@ -70,6 +70,14 @@ func (h Handler) GetBoxesBoxIdQr(ctx echo.Context, boxId openapi.Id, params open
 func (h Handler) PostBoxes(ctx echo.Context) error {
 	logger := log.New()
 
+	cctx, ok := ctx.(*driver.CostomContext)
+
+	if !ok {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+
+	userId := cctx.UserId
+
 	req := &openapi.PostBoxesJSONRequestBody{}
 	if err := ctx.Bind(req); err != nil {
 		logger.Error(err)
@@ -77,7 +85,8 @@ func (h Handler) PostBoxes(ctx echo.Context) error {
 	}
 
 	reqBox := &entity.Box{
-		Name: string(req.Name),
+		Name:      string(req.Name),
+		CreatedBy: userId,
 	}
 	if req.Note != nil {
 		reqBox.Note = string(*req.Note)
