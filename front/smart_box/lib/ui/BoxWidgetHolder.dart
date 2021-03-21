@@ -16,7 +16,6 @@ class BoxWidgetHolderState extends State<BoxWidgetHolder> {
 
   String getIdToken() {
     //return "token";
-    print(widget.cognitoUserSession.getIdToken().getJwtToken());
     return widget.cognitoUserSession.getIdToken().getJwtToken();
   }
 
