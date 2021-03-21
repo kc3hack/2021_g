@@ -20,7 +20,7 @@ func (b *Box) FindALLByUserId(userId entity.UserId) (*entity.Boxes, error) {
 }
 
 func (b *Box) FindCodeById(id entity.BoxId) (entity.Code, error) {
-	return entity.Code{}, nil
+	return entity.Code(""), nil
 }
 
 func (b *Box) Store(e *entity.Box) (*entity.Box, error) {

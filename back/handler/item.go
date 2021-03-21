@@ -51,7 +51,7 @@ func (h Handler) PostBoxesBoxIdItems(ctx echo.Context, boxId openapi.Id) error {
 	}
 
 	res := openapi.Item{
-		Id: openapi.Id(resItem.Id),
+		Id: openapi.Id(resItem.ID),
 		// TODO
 	}
 
@@ -80,7 +80,7 @@ func (h Handler) PutItemsItemId(ctx echo.Context, itemId openapi.Id) error {
 	}
 
 	res := openapi.Item{
-		Id: openapi.Id(resItem.Id),
+		Id: openapi.Id(resItem.ID),
 		// TODO
 	}
 
