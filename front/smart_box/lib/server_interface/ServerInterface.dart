@@ -1,28 +1,38 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/json_utility/JsonUtility.dart';
+import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
-final String baseUrl =
-    "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
-//final String baseUrl = "https://smartbox.yukiho.dev/";
+// final String baseUrl =
+//     "https://ea950b6b-7863-4af5-b00b-2544f5791757.mock.pstmn.io/";
+final String baseUrl = "https://smartbox.yukiho.dev/";
 
 enum ClientRequest { POST, PUT, GET, DELETE }
+
+String getCookies(List<Cookie> cookies) {
+  return cookies.map((cookie) => '${cookie.name}=${cookie.value}').join('; ');
+}
 
 ///
 /// サーバへのリクエスト
 ///
 Future<String> _request(String url, ClientRequest request, String token,
     {String body = ""}) async {
+  final cookieManager = WebviewCookieManager();
+  final gotCookies =
+      await cookieManager.getCookies('https://smartbox.yukiho.dev/');
+  final cookie = getCookies(gotCookies);
+  print(cookie);
+
   Map<String, String> headers = {
     'content-type': 'application/json',
-    "Authorization": token,
+    HttpHeaders.cookieHeader: cookie,
   };
   url = baseUrl + url;
-  print(token);
-  print(url);
   http.Response resp;
   switch (request) {
     case ClientRequest.GET:

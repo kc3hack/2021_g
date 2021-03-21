@@ -1,4 +1,3 @@
-import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_box/ui/BottomNavBar.dart';
@@ -7,8 +6,7 @@ import 'package:smart_box/ui/QrScan.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 
 class RootWidget extends StatefulWidget {
-  final CognitoUserSession cognitoUserSession;
-  RootWidget(this.cognitoUserSession, {Key key}) : super(key: key);
+  RootWidget({Key key}) : super(key: key);
 
   @override
   _RootWidgetState createState() => _RootWidgetState();
@@ -35,9 +33,9 @@ class _RootWidgetState extends State<RootWidget> {
   @override
   Widget build(BuildContext context) {
     _routes = [
-      BoxWidgetHolder(widget.cognitoUserSession),
+      BoxWidgetHolder(null),
       QrScan(),
-      QrWidgetHolder(widget.cognitoUserSession),
+      QrWidgetHolder(null),
     ];
     return Scaffold(
       // body: _routes.elementAt(selectedIndex),
