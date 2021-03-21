@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.cyan,
         scaffoldBackgroundColor: Color.fromARGB(255, 236, 242, 242),
       ),
-      home: RootWidget(),
+      home: RootWidget(null),
     );
   }
 }
