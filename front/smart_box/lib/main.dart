@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smart_box/auth/Signup.dart';
+import 'package:smart_box/auth/WebViewWidget.dart';
 
 void main() async {
   await DotEnv.load();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.cyan,
         scaffoldBackgroundColor: Color.fromARGB(255, 236, 242, 242),
       ),
-      home: Signup(),
+      home: WebViewWidget(),
     );
   }
 }
