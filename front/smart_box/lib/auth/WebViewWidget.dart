@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:smart_box/ui/RootWidget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+///
+///ログインをするためのWebViewを表示する
+///
+
 class WebViewWidget extends StatefulWidget {
   @override
   _WebViewWidgetState createState() => _WebViewWidgetState();

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:smart_box/Base64Utility/Base64Utility.dart';
+import 'package:smart_box/LifeCycle/LifeCycleManager.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
+import 'package:smart_box/ui/DialogUtility.dart';
 import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
 import "package:url_launcher/url_launcher.dart";
@@ -19,10 +21,13 @@ class QrResultWidget extends StatefulWidget {
 }
 
 class _QrResultWidgetState extends State<QrResultWidget> {
+  bool _isStorageRequest = false;
+
   ///
   /// ストレージの許可を要請する
   ///
-  Future<void> showRequestDialog() async {
+  Future<void> _showRequestDialog() async {
+    this._isStorageRequest = true;
     await showDialog(
         context: context,
         builder: (context) {
@@ -31,9 +36,11 @@ class _QrResultWidgetState extends State<QrResultWidget> {
             content: Text("QRコードを保存するために使用します"),
             actions: <Widget>[
               TextButton(
-                child: Text("キャンセル"),
-                onPressed: () => Navigator.pop(context),
-              ),
+                  child: Text("キャンセル"),
+                  onPressed: () {
+                    this._isStorageRequest = false;
+                    Navigator.pop(context);
+                  }),
               TextButton(
                 child: Text("設定"),
                 onPressed: () async {
@@ -45,23 +52,36 @@ class _QrResultWidgetState extends State<QrResultWidget> {
         });
   }
 
+  Future<bool> _checkStoragePermission() async {
+    if (await Permission.storage.isPermanentlyDenied) {
+      await _showRequestDialog();
+    }
+    if (await Permission.storage.isUndetermined) {
+      await _showRequestDialog();
+    }
+    if (await Permission.storage.isGranted) {
+      return true;
+    }
+    return false;
+  }
+
   ///
   /// QRコードを作成する
   ///
   Future<void> createQr() async {
-    if (await Permission.storage.isPermanentlyDenied) {
-      await showRequestDialog();
-    }
-    if (await Permission.storage.isUndetermined) {
-      await showRequestDialog();
-    }
-
-    if (await Permission.storage.isGranted) {
-      String base64String =
-          await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
-
-      print(ImageGallerySaver.saveImage(base64ToUnit8List(
-          base64String.replaceAll(new RegExp(r'"\n\r'), ""))));
+    if (await this._checkStoragePermission()) {
+      try {
+        String base64String =
+            await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
+        print(ImageGallerySaver.saveImage(base64ToUnit8List(
+            base64String.replaceAll(new RegExp(r'("|\n|\r)'), ""))));
+        showNormalDialog(context, "QR生成完了", content: "画像を保存しました");
+      } catch (exception) {
+        print(exception);
+        showErrorDialog(context, "エラー", content: "画像の保存に失敗しました");
+      }
+    } else {
+      showErrorDialog(context, "エラー", content: "画像の保存に失敗しました");
     }
   }
 
@@ -98,6 +118,12 @@ class _QrResultWidgetState extends State<QrResultWidget> {
 
   @override
   Widget build(BuildContext context) {
+    onResume(() {
+      if (this._isStorageRequest) {
+        Navigator.of(context).pop();
+        this._isStorageRequest = false;
+      }
+    });
     return WillPopScope(
         child: Scaffold(
             appBar: AppBar(
