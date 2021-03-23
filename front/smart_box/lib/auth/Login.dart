@@ -118,7 +118,7 @@ class Login extends StatelessWidget {
     try {
       var session = await cognitoUser.authenticateUser(authDetails);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => (RootWidget())));
+          .push(MaterialPageRoute(builder: (context) => (Container())));
     } catch (e) {
       await showDialog<int>(
         context: context,

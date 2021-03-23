@@ -6,10 +6,10 @@ import 'package:smart_box/Base64Utility/Base64Utility.dart';
 import 'package:smart_box/Camera/Camera.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/BoxWidgetHolder.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 class BoxAddWidget extends StatefulWidget {
-  final BoxWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   BoxAddWidget(this.widgetHolderState);
   @override
   _BoxAddWidgetState createState() => _BoxAddWidgetState();
@@ -166,10 +166,10 @@ class _BoxAddWidgetState extends State<BoxAddWidget> {
                                   print(this._boxName);
                                   print(this._description);
                                   print(await createBox(
-                                      Box(1, this._boxName,
-                                          description: this._description,
-                                          base64Image: this._base64Image),
-                                      widget.widgetHolderState.getIdToken()));
+                                    Box(1, this._boxName,
+                                        description: this._description,
+                                        base64Image: this._base64Image),
+                                  ));
                                   widget.widgetHolderState.onWillPopHandler();
                                 }
                               },

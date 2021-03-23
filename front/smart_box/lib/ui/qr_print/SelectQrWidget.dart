@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/QrResultWidget.dart';
-import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
 
 enum PrintType { BIG, MIDDLE, SMALL, STRIP }
 
 class SelectQrWidget extends StatefulWidget {
-  final QrWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   final Box aBox;
   SelectQrWidget(this.widgetHolderState, this.aBox);
   @override

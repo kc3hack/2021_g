@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({this.selectedIndex, this.setBottomBarIndex});
 
-  int selectedIndex;
-  Function(int) setBottomBarIndex;
+  final int selectedIndex;
+  final Function(int) setBottomBarIndex;
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -27,7 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           Container(
             width: size.width,
-            height: size.height * 0.9,
+            height: size.height,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -39,6 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   child: Container(
                     width: size.width * 0.13,
                     height: size.height * 0.1,
+                    alignment: Alignment.bottomCenter,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: widget.selectedIndex == 0

@@ -4,16 +4,16 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/BoxWidgetHolder.dart';
 import 'package:smart_box/ui/ItemAddWidget.dart';
 import 'package:smart_box/ui/ItemWidget.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 ///
 /// アイテム一覧を表示するWidget
 ///
 class ItemListWidget extends StatefulWidget {
   final Box aBox; //ボックス
-  final BoxWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   ItemListWidget(this.aBox, this.widgetHolderState);
   @override
   _ItemListWidgetState createState() => _ItemListWidgetState();
@@ -27,7 +27,7 @@ class _ItemListWidgetState extends State<ItemListWidget> {
   void initState() {
     super.initState();
     this.aBox = widget.aBox;
-    getItems(this.aBox.id, "token").then((items) {
+    getItems(this.aBox.id).then((items) {
       if (!mounted) {
         return;
       }
@@ -53,9 +53,7 @@ class _ItemListWidgetState extends State<ItemListWidget> {
               isDestructiveAction: true,
               onPressed: () async {
                 Navigator.pop(context);
-                deleteItem(this.items[index].id,
-                        widget.widgetHolderState.getIdToken())
-                    .then((value) {
+                deleteItem(this.items[index].id).then((value) {
                   if (value) {
                     setState(() {
                       this.items.removeAt(index);

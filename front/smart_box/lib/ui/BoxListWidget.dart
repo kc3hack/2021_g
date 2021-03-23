@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/BoxAddWidget.dart';
-import 'package:smart_box/ui/BoxWidgetHolder.dart';
 import 'package:smart_box/ui/ItemListWidget.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 ///
 /// ボックス一覧画面のWidget
@@ -13,7 +13,7 @@ import 'package:smart_box/ui/ItemListWidget.dart';
 /// これによりbottomNavigationを表示したまま遷移している
 ///
 class BoxListWidget extends StatefulWidget {
-  final BoxWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   BoxListWidget(this.widgetHolderState);
   @override
   _BoxListWidgetState createState() => _BoxListWidgetState();
@@ -27,7 +27,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   ///
   Future<void> _updateBoxList() async {
     this.boxList.clear();
-    this.boxList = await getBoxes(widget.widgetHolderState.getIdToken());
+    this.boxList = await getBoxes();
     return;
   }
 
@@ -54,8 +54,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
               isDestructiveAction: true,
               onPressed: () async {
                 Navigator.pop(context);
-                deleteBox(box.id, widget.widgetHolderState.getIdToken())
-                    .then((value) {
+                deleteBox(box.id).then((value) {
                   if (value) {
                     setState(() {
                       this.boxList.removeAt(index);

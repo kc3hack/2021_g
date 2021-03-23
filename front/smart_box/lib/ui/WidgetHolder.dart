@@ -1,30 +1,25 @@
 import 'dart:collection';
 
-import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:smart_box/ui/BoxListWidget.dart';
 
-class BoxWidgetHolder extends StatefulWidget {
-  CognitoUserSession cognitoUserSession;
-  BoxWidgetHolder(this.cognitoUserSession);
-  @override
-  BoxWidgetHolderState createState() => BoxWidgetHolderState();
-}
-
-class BoxWidgetHolderState extends State<BoxWidgetHolder> {
+///
+/// ウィジェットの遷移を管理するクラス
+///
+class WidgetHolderState<T extends StatefulWidget> extends State<T> {
   Queue<Object> routeStack = Queue();
 
-  String getIdToken() {
-    return "token";
-    //return widget.cognitoUserSession.getAccessToken().getJwtToken();
-  }
-
+  ///
+  /// 新しいウィジェットに遷移する
+  ///
   void add(Object aWidget) {
     setState(() {
       this.routeStack.addLast(aWidget);
     });
   }
 
+  ///
+  /// ひとつ前のウィジェットに戻る
+  ///
   void pop() {
     if (this.routeStack.length != 0) {
       setState(() {
@@ -33,6 +28,17 @@ class BoxWidgetHolderState extends State<BoxWidgetHolder> {
     }
   }
 
+  ///
+  /// スタックしてるウィジェットを破棄して新たに始める
+  ///
+  void startNewWidget(Object aWidget) {
+    this.routeStack.clear();
+    this.add(aWidget);
+  }
+
+  ///
+  /// 現在表示しているウィジェットを取得
+  ///
   Object now() {
     if (this.routeStack.length == 0) {
       return null;
@@ -54,13 +60,10 @@ class BoxWidgetHolderState extends State<BoxWidgetHolder> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      this.routeStack.add(BoxListWidget(this));
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return (this.now() == null) ? Container() : this.now();
+    return Container();
   }
 }

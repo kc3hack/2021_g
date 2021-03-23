@@ -7,12 +7,12 @@ import 'package:smart_box/LifeCycle/LifeCycleManager.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
 import 'package:smart_box/ui/DialogUtility.dart';
-import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
 import "package:url_launcher/url_launcher.dart";
 
 class QrResultWidget extends StatefulWidget {
-  final QrWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   final PrintType type;
   final Box aBox;
   QrResultWidget(this.widgetHolderState, this.aBox, this.type);
@@ -71,8 +71,9 @@ class _QrResultWidgetState extends State<QrResultWidget> {
   Future<void> createQr() async {
     if (await this._checkStoragePermission()) {
       try {
-        String base64String =
-            await getQr(widget.aBox.id, widget.widgetHolderState.getIdToken());
+        String base64String = await getQr(
+          widget.aBox.id,
+        );
         print(ImageGallerySaver.saveImage(base64ToUnit8List(
             base64String.replaceAll(new RegExp(r'("|\n|\r)'), ""))));
         showNormalDialog(context, "QR生成完了", content: "画像を保存しました");

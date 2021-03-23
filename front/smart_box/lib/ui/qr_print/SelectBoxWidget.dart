@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/qr_print/QrWidgetHolder.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 import 'package:smart_box/ui/qr_print/SelectQrWidget.dart';
 
 class SelectBoxWidget extends StatefulWidget {
-  final QrWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   SelectBoxWidget(this.widgetHolderState);
   @override
   _SelectBoxWidgetState createState() => _SelectBoxWidgetState();
@@ -21,7 +21,7 @@ class _SelectBoxWidgetState extends State<SelectBoxWidget> {
   ///
   Future<void> _updateBoxList() async {
     this.boxList.clear();
-    this.boxList = await getBoxes(widget.widgetHolderState.getIdToken());
+    this.boxList = await getBoxes();
     return;
   }
 

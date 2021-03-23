@@ -9,10 +9,10 @@ import 'package:smart_box/baggage/Item.dart';
 import 'package:smart_box/baggage/box.dart';
 import 'package:smart_box/barcode_reader/BarcodeReader.dart';
 import 'package:smart_box/server_interface/ServerInterface.dart';
-import 'package:smart_box/ui/BoxWidgetHolder.dart';
+import 'package:smart_box/ui/WidgetHolder.dart';
 
 class ItemAddWidget extends StatefulWidget {
-  final BoxWidgetHolderState widgetHolderState;
+  final WidgetHolderState widgetHolderState;
   final Box aBox;
   ItemAddWidget(this.aBox, this.widgetHolderState);
   @override
@@ -232,12 +232,11 @@ class _ItemAddWidgetState extends State<ItemAddWidget> {
                                         print(this._itemName);
                                         print(this._description);
                                         print(await createItem(
-                                            widget.aBox.id,
-                                            Item(1, this._itemName,
-                                                description: this._description,
-                                                base64Image: this._base64Image),
-                                            widget.widgetHolderState
-                                                .getIdToken()));
+                                          widget.aBox.id,
+                                          Item(1, this._itemName,
+                                              description: this._description,
+                                              base64Image: this._base64Image),
+                                        ));
                                         widget.widgetHolderState
                                             .onWillPopHandler();
                                       }

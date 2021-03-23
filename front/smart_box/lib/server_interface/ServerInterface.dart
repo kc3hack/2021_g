@@ -20,7 +20,7 @@ String getCookies(List<Cookie> cookies) {
 ///
 /// サーバへのリクエスト
 ///
-Future<String> _request(String url, ClientRequest request, String token,
+Future<String> _request(String url, ClientRequest request,
     {String body = ""}) async {
   final cookieManager = WebviewCookieManager();
   final gotCookies =
@@ -61,8 +61,11 @@ Future<String> _request(String url, ClientRequest request, String token,
 ///
 /// サーバからボックスのリストを取得する
 ///
-Future<List<Box>> getBoxes(String token) async {
-  String jsonString = await _request("boxes", ClientRequest.GET, token);
+Future<List<Box>> getBoxes() async {
+  String jsonString = await _request(
+    "boxes",
+    ClientRequest.GET,
+  );
   print(jsonString);
   return jsonToBoxes(jsonString);
 }
@@ -70,29 +73,33 @@ Future<List<Box>> getBoxes(String token) async {
 ///
 /// サーバにボックスを追加する
 ///
-Future<Box> createBox(Box aBox, String token) async {
+Future<Box> createBox(
+  Box aBox,
+) async {
   String body = json.encode({
     "name": aBox.boxName,
     "icon": aBox.base64Image,
     "note": aBox.description,
   });
   print(body);
-  String jsonString =
-      await _request("boxes", ClientRequest.POST, token, body: body);
+  String jsonString = await _request("boxes", ClientRequest.POST, body: body);
   return jsonToBox(jsonString);
 }
 
 ///
 /// サーバのボックスを編集する
 ///
-Future<Box> updateBox(int boxId, Box aBox, String token) async {
+Future<Box> updateBox(
+  int boxId,
+  Box aBox,
+) async {
   String body = json.encode({
     "name": aBox.boxName,
     "icon": aBox.base64Image,
     "note": aBox.description
   });
   String jsonString = await _request(
-      "boxes/" + boxId.toString(), ClientRequest.POST, token,
+      "boxes/" + boxId.toString(), ClientRequest.POST,
       body: body);
   return jsonToBox(jsonString);
 }
@@ -100,40 +107,56 @@ Future<Box> updateBox(int boxId, Box aBox, String token) async {
 ///
 /// サーバからボックスを削除する
 ///
-Future<bool> deleteBox(int boxId, String token) async {
-  await _request("boxes/" + boxId.toString(), ClientRequest.DELETE, token);
+Future<bool> deleteBox(
+  int boxId,
+) async {
+  await _request(
+    "boxes/" + boxId.toString(),
+    ClientRequest.DELETE,
+  );
   return true;
 }
 
 ///
 /// ボックスからQRコードを表すBASE64文字列を取得
 ///
-Future<String> getQr(int boxId, String token) async {
+Future<String> getQr(
+  int boxId,
+) async {
   String base64String = await _request(
-      "boxes/" + boxId.toString() + "/qr", ClientRequest.GET, token);
+    "boxes/" + boxId.toString() + "/qr",
+    ClientRequest.GET,
+  );
   return base64String;
 }
 
 ///
 /// サーバからアイテム一覧を取得する
 ///
-Future<List<Item>> getItems(int boxId, String token) async {
+Future<List<Item>> getItems(
+  int boxId,
+) async {
   String jsonString = await _request(
-      "boxes/" + boxId.toString() + "/items", ClientRequest.GET, token);
+    "boxes/" + boxId.toString() + "/items",
+    ClientRequest.GET,
+  );
   return jsonToItems(jsonString);
 }
 
 ///
 /// サーバにボックスを追加する
 ///
-Future<Item> createItem(int boxId, Item item, String token) async {
+Future<Item> createItem(
+  int boxId,
+  Item item,
+) async {
   String body = json.encode({
     "name": item.itemName,
     "icon": item.base64Image,
     "note": item.description
   });
   String jsonString = await _request(
-      "boxes/" + boxId.toString() + "/items", ClientRequest.POST, token,
+      "boxes/" + boxId.toString() + "/items", ClientRequest.POST,
       body: body);
   return jsonToItem(jsonString);
 }
@@ -141,14 +164,17 @@ Future<Item> createItem(int boxId, Item item, String token) async {
 ///
 /// サーバのボックスにアイテムを追加する
 ///
-Future<Item> updateItem(int itemId, Item item, String token) async {
+Future<Item> updateItem(
+  int itemId,
+  Item item,
+) async {
   String body = json.encode({
     "name": item.itemName,
     "icon": item.base64Image,
     "note": item.description
   });
   String jsonString = await _request(
-      "items/" + itemId.toString(), ClientRequest.PUT, token,
+      "items/" + itemId.toString(), ClientRequest.PUT,
       body: body);
   return jsonToItem(jsonString);
 }
@@ -156,17 +182,26 @@ Future<Item> updateItem(int itemId, Item item, String token) async {
 ///
 /// サーバのボックスからアイテムを削除する
 ///
-Future<bool> deleteItem(int itemId, String token) async {
-  await _request("items/" + itemId.toString(), ClientRequest.DELETE, token);
+Future<bool> deleteItem(
+  int itemId,
+) async {
+  await _request(
+    "items/" + itemId.toString(),
+    ClientRequest.DELETE,
+  );
   return true;
 }
 
 ///
 /// JANコードを読み取る
 ///
-Future<Item> readJan(String code, String token) async {
-  String jsonString =
-      await _request("products?jan=" + code, ClientRequest.GET, token);
+Future<Item> readJan(
+  String code,
+) async {
+  String jsonString = await _request(
+    "products?jan=" + code,
+    ClientRequest.GET,
+  );
   List<String> qrItem = jsonToQrItem(jsonString);
   if (qrItem[0] == null) {
     return null;

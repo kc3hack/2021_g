@@ -27,6 +27,7 @@ class _WebViewWidgetState extends State<WebViewWidget> {
       initialUrl: 'https://smartbox.yukiho.dev/',
       onPageFinished: (url) {
         if (url == "https://smartbox.yukiho.dev/") {
+          Navigator.of(context).pop();
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return RootWidget();
           }));
