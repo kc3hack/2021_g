@@ -56,6 +56,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
                 Navigator.pop(context);
                 deleteBox(box.id).then((value) {
                   if (value) {
+                    if (!mounted) return;
                     setState(() {
                       this.boxList.removeAt(index);
                     });
@@ -180,6 +181,7 @@ class _BoxListWidgetState extends State<BoxListWidget> {
   void initState() {
     super.initState();
     _updateBoxList().then((value) {
+      if (!mounted) return;
       setState(() {});
     });
   }

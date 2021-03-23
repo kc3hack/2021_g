@@ -12,6 +12,7 @@ class WidgetHolderState<T extends StatefulWidget> extends State<T> {
   /// 新しいウィジェットに遷移する
   ///
   void add(Object aWidget) {
+    if (!mounted) return;
     setState(() {
       this.routeStack.addLast(aWidget);
     });
@@ -22,6 +23,7 @@ class WidgetHolderState<T extends StatefulWidget> extends State<T> {
   ///
   void pop() {
     if (this.routeStack.length != 0) {
+      if (!mounted) return;
       setState(() {
         this.routeStack.removeLast();
       });
@@ -50,10 +52,8 @@ class WidgetHolderState<T extends StatefulWidget> extends State<T> {
   /// 戻るボタンが押された時の処理
   ///
   Future<bool> onWillPopHandler() async {
-    setState(() {
-      print(this.now());
-      this.pop();
-    });
+    print(this.now());
+    this.pop();
     return false;
   }
 

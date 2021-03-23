@@ -63,5 +63,10 @@ class Item {
   bool operator ==(Object other) => other is Item && other.id == id;
 
   @override
+  String toString() {
+    return this.id.toString() + " : " + this._itemName;
+  }
+
+  @override
   int get hashCode => this._id;
 }

@@ -26,7 +26,7 @@ Future<String> _request(String url, ClientRequest request,
   final gotCookies =
       await cookieManager.getCookies('https://smartbox.yukiho.dev/');
   final cookie = getCookies(gotCookies);
-  print(cookie);
+  //print(cookie);
 
   Map<String, String> headers = {
     'content-type': 'application/json',
@@ -34,7 +34,7 @@ Future<String> _request(String url, ClientRequest request,
   };
   url = baseUrl + url;
   http.Response resp;
-  print(url);
+  //print(url);
   switch (request) {
     case ClientRequest.GET:
       resp = await http.get(url, headers: headers);
@@ -54,7 +54,7 @@ Future<String> _request(String url, ClientRequest request,
     print(resp.body);
     throw Exception("status code: " + resp.statusCode.toString());
   }
-  print(resp.body);
+  //print(resp.body);
   return resp.body;
 }
 
@@ -66,7 +66,6 @@ Future<List<Box>> getBoxes() async {
     "boxes",
     ClientRequest.GET,
   );
-  print(jsonString);
   return jsonToBoxes(jsonString);
 }
 
@@ -81,7 +80,6 @@ Future<Box> createBox(
     "icon": aBox.base64Image,
     "note": aBox.description,
   });
-  print(body);
   String jsonString = await _request("boxes", ClientRequest.POST, body: body);
   return jsonToBox(jsonString);
 }

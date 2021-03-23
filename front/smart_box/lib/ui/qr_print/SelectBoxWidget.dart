@@ -26,6 +26,7 @@ class _SelectBoxWidgetState extends State<SelectBoxWidget> {
   }
 
   void _boxTapHandler(int index, Box box) {
+    if (!mounted) return;
     setState(() {
       this.selected = index;
     });
@@ -59,6 +60,7 @@ class _SelectBoxWidgetState extends State<SelectBoxWidget> {
     // TODO: implement initState
     super.initState();
     _updateBoxList().then((value) {
+      if (!mounted) return;
       setState(() {});
     });
   }

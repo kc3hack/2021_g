@@ -33,7 +33,7 @@ class _QrResultWidgetState extends State<QrResultWidget> {
         builder: (context) {
           return AlertDialog(
             title: Text('QRコードを保存するためにはストレージの許可が必要です'),
-            content: Text("QRコードを保存するために使用します"),
+            content: Text("設定画面からストレージの使用を許可してください"),
             actions: <Widget>[
               TextButton(
                   child: Text("キャンセル"),

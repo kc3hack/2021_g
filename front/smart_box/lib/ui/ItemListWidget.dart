@@ -55,6 +55,7 @@ class _ItemListWidgetState extends State<ItemListWidget> {
                 Navigator.pop(context);
                 deleteItem(this.items[index].id).then((value) {
                   if (value) {
+                    if (!mounted) return;
                     setState(() {
                       this.items.removeAt(index);
                     });

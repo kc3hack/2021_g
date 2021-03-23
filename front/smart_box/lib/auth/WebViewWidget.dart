@@ -15,6 +15,8 @@ class WebViewWidget extends StatefulWidget {
 }
 
 class _WebViewWidgetState extends State<WebViewWidget> {
+  bool _isLogin = false;
+
   void initState() {
     super.initState();
     // Enable hybrid composition.
@@ -23,7 +25,8 @@ class _WebViewWidgetState extends State<WebViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return WebView(
+    return Container(
+        child: WebView(
       initialUrl: 'https://smartbox.yukiho.dev/',
       onPageFinished: (url) {
         if (url == "https://smartbox.yukiho.dev/") {
@@ -33,6 +36,6 @@ class _WebViewWidgetState extends State<WebViewWidget> {
           }));
         }
       },
-    );
+    ));
   }
 }
